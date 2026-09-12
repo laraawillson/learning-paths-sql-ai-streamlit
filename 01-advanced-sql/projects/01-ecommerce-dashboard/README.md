@@ -8,6 +8,33 @@ Build a comprehensive SQL analytics solution for an e-commerce platform. You'll 
 **Difficulty:** Intermediate  
 **Skills:** JOINs, Aggregates, Window Functions, Subqueries
 
+## Project Progress and File Guide
+
+### Completed Work
+
+- Designed the SQLite schema for customers, products, orders, order items, and reviews.
+- Added primary keys, foreign keys, `CHECK` constraints, and `UNIQUE` constraints.
+- Built a Python data generator that creates customers, products, orders, order items, and reviews.
+- Generated dates within 2026 for registrations, products, orders, and reviews.
+- Ensured orders use existing customers and products.
+- Calculated order totals from quantities, prices, and discounts on order items.
+- Ensured review ratings and customer/product pairs satisfy the schema rules.
+- Validated row counts, foreign-key relationships, dates, totals, ratings, and duplicate review pairs.
+
+### Current Files
+
+| File | Purpose |
+|---|---|
+| `schema.sql` | Creates the five database tables and defines their keys and constraints. |
+| `generate_data.py` | Recreates the SQLite database and generates realistic sample data in dependency order. |
+| `validate_data.sql` | Contains SQL checks for review counts, rating ranges, and duplicate customer/product reviews. |
+| `ecommerce.db` | SQLite database file available for local exploration. |
+| `README.md` | Documents the project goals, schema, progress, and planned analysis work. |
+
+### Next Development Stage
+
+The data-generation stage is complete. The next stage is to write analytical SQL queries for the business questions below, beginning with joins and aggregate functions, then progressing to CTEs and window functions.
+
 ## 🎯 Learning Objectives
 
 By completing this project, you'll master:
@@ -187,3 +214,4 @@ After completing this project:
 - Business Questions: 4-6 hours
 - Optimization: 2-3 hours
 - **Total: 16-22 hours over 2-3 weeks**
+
