@@ -1,86 +1,173 @@
-import sqlite3
 import random
+import sqlite3
 from datetime import date as calendar_date, timedelta
 from pathlib import Path
+from faker import Faker
 
-# Create the database and apply the schema 
+# Seed both random generators so the same script produces the same dataset
+# each time it runs. This makes development and debugging easier.
+random.seed(15)
+fake = Faker("en_US")
+fake.seed_instance(15)
+
+# Recreate the generated database from scratch on every run. This prevents
+# old rows from mixing with the newly generated data.
 database_path = "ecommerce.db"
 database_file = Path(database_path)
 if database_file.exists():
     database_file.unlink()
 
+# Open the SQLite database and enable foreign-key checking for this connection.
 connection = sqlite3.connect(database_path)
 connection.execute("PRAGMA foreign_keys = ON")
 
+# Create all tables by executing the SQL in schema.sql.
 schema = Path("schema.sql").read_text()
 connection.executescript(schema)
 
 print("Database schema created")
 
-#-----------------Define Record Counts-----------------#
-customer_count = 1000
-order_count = 5000
-product_count = 500
-review_count = 3000
+# These lists and dictionaries are generation rules. They are used by Python
+# to create values before those values are inserted into the database.
 
-#-----------------Data Generation Rules-----------------#
+customer_segments = ["Basic","Standard", "Premium"]
+product_catalog = [
+    ("VertexBook Air 13", "Laptops", 699.99, 1299.99),
+    ("OrbitFlex 2-in-1", "Laptops", 799.99, 1499.99),
+    ("NovaPhone Ultra", "Smartphones", 799.99, 1399.99),
+    ("VertexPhone Lite", "Smartphones", 249.99, 599.99),
+    ("OrbitPhone Max", "Smartphones", 599.99, 999.99),
+    ("NovaTab 11", "Tablets", 299.99, 799.99),
+    ("VertexTab Mini", "Tablets", 199.99, 499.99),
+    ("OrbitTab Pro", "Tablets", 499.99, 999.99),
+    ("NovaView 27 4K", "Monitors", 249.99, 699.99),
+    ("VertexView 34 Ultrawide", "Monitors", 499.99, 999.99),
+    ("OrbitView 24", "Monitors", 149.99, 349.99),
+    ("NovaSound Wireless", "Headphones", 79.99, 349.99),
+    ("VertexBuds Pro", "Headphones", 99.99, 249.99),
+    ("OrbitStudio ANC", "Headphones", 149.99, 399.99),
+    ("NovaKey Mechanical", "Keyboards", 59.99, 199.99),
+    ("VertexKey Compact", "Keyboards", 39.99, 129.99),
+    ("OrbitBoard Wireless", "Keyboards", 49.99, 159.99),
+    ("NovaGlide Wireless", "Mice", 29.99, 129.99),
+    ("VertexTrack Pro", "Mice", 49.99, 149.99),
+    ("OrbitMouse Silent", "Mice", 24.99, 79.99),
+    ("NovaCam 4K", "Webcams", 69.99, 249.99),
+    ("VertexCam Studio", "Webcams", 129.99, 299.99),
+    ("OrbitCam HD", "Webcams", 39.99, 99.99),
+    ("NovaRouter AX6000", "Networking", 149.99, 399.99),
+    ("VertexMesh WiFi 6", "Networking", 199.99, 499.99),
+    ("OrbitSwitch 16-Port", "Networking", 89.99, 249.99),
+    ("NovaDrive 2TB SSD", "Storage", 89.99, 249.99),
+    ("VertexVault 4TB", "Storage", 149.99, 399.99),
+    ("OrbitFlash 256GB", "Storage", 19.99, 59.99),
+    ("NovaHub USB-C", "Accessories", 39.99, 149.99),
+    ("VertexCharge 65W", "Accessories", 29.99, 89.99),
+    ("OrbitDock Pro", "Accessories", 99.99, 249.99),
+    ("NovaWatch Active", "Wearables", 149.99, 399.99),
+    ("VertexFit Band", "Wearables", 39.99, 129.99),
+    ("OrbitWatch Pro", "Wearables", 299.99, 599.99),
+    ("NovaCamera Mirrorless", "Cameras", 699.99, 1799.99),
+    ("VertexCam Lens Kit", "Cameras", 299.99, 999.99),
+    ("OrbitAction Cam", "Cameras", 149.99, 499.99),
+    ("NovaPrint Color", "Printers", 129.99, 399.99),
+    ("VertexLaser Pro", "Printers", 199.99, 599.99),
+    ("OrbitPrint Compact", "Printers", 79.99, 199.99),
+    ("NovaBeam Projector", "Projectors", 399.99, 1299.99),
+    ("VertexCinema 4K", "Projectors", 699.99, 1999.99),
+    ("OrbitMini Projector", "Projectors", 149.99, 499.99),
+    ("NovaMic USB", "Audio", 59.99, 199.99),
+    ("VertexMic Studio", "Audio", 149.99, 499.99),
+    ("OrbitSoundbar", "Audio", 99.99, 399.99),
+    ("NovaDrone Air", "Drones", 399.99, 999.99),
+    ("VertexDrone Pro", "Drones", 799.99, 1999.99),
+    ("OrbitMini Drone", "Drones", 99.99, 299.99)
+]
 
-first_names = ["John", "Jane", "Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Hannah", "Ian", "Jack", "Kathy", "Liam", "Mia", "Noah", "Olivia", "Paul", "Quinn", "Rachel"]
-last_names = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin"] 
-customer_segments = ["Standard", "Premium", "Basic"]
-countries = ["USA", "Canada", "UK", "Germany", "France", "Italy", "Spain", "Australia", "Brazil", "India"]
-customer_segments = ["Standard", "Premium", "Basic"]
-product_names = ["Laptop", "Smartphone", "Tablet", "Headphones", "Smartwatch", "Camera", "Printer", "Monitor", "Keyboard", "Mouse", "Speaker", "Router", "External Hard Drive", "USB Flash Drive", "Webcam", "Microphone", "Projector", "Drone", "VR Headset", "Fitness Tracker"]
-product_categories = ["Electronics", "Accessories", "Gadgets", "Wearables", "Peripherals"]
-product_prices = [999.99, 699.99, 399.99, 199.99, 299.99, 599.99, 149.99, 249.99, 29.99, 19.99, 79.99, 89.99, 129.99, 14.99, 179.99, 59.99, 349.99, 849.99, 349.99, 79.99, 49.99, 149.99, 199.99, 249.99, 299.99, 399.99, 499.99, 599.99, 699.99, 799.99]
-order_statuses = ["Pending", "Completed","Cancelled"]
-review_texts = [
+# Keep inventory ranges realistic by category. For example, expensive drones
+# usually have lower stock than inexpensive accessories.
+stock_ranges = {
+    "Laptops": (10, 100),
+    "Smartphones": (20, 200),
+    "Tablets": (15, 150),
+    "Monitors": (10, 100),
+    "Headphones": (30, 300),
+    "Keyboards": (20, 200),
+    "Mice": (25, 250),
+    "Webcams": (25, 250),
+    "Networking": (15, 150),
+    "Storage": (30, 300),
+    "Accessories": (50, 500),
+    "Wearables": (20, 200),
+    "Cameras": (5, 75),
+    "Printers": (10, 100),
+    "Projectors": (5, 60),
+    "Audio": (15, 150),
+    "Drones": (5, 50),
+}
+
+order_statuses = ["Completed","Pending","Cancelled"]
+
+positive_review_texts = [
     "Great product, highly recommend!",
-    "Not satisfied with the quality.",
-    "Excellent customer service.",
-    "Fast shipping and good packaging.",
-    "The product did not meet my expectations.",
+    "Excellent quality and performance.",
     "Very happy with my purchase.",
     "Would buy again.",
-    "The product arrived damaged.",
     "Good value for the price.",
-    "The product is exactly as described.",
-    None
-]   
+    "Exactly as described."
+]
 
-# Define a start and end date for generating random dates
-start_date = calendar_date(2026, 1, 1)
-end_date = calendar_date(2026, 12, 31)
+negative_review_texts = [
+    "Not satisfied with the quality.",
+    "The product did not meet my expectations.",
+    "The product arrived damaged.",
+    "Poor value for the price.",
+    "Would not buy again."
+]
 
-# Generate a list of dates between start_date and end_date
+# All generated dates stay inside this window. ISO format (YYYY-MM-DD) also
+# sorts correctly as text in SQLite.
+start_date = calendar_date(2025,1, 1)
+end_date = calendar_date.today()
+
+# Build a reusable list of every allowed date.
 date_list = []
 current_date = start_date
 
-# Loops through dates from start_date to end_date and appends them to the date_list
 while current_date <= end_date:
     date_list.append(current_date.isoformat())
     current_date += timedelta(days=1)
+
+
+# These control the size of the generated dataset. The product count is tied
+# to the catalog so every catalog entry becomes one product row.
+customer_count = 1000
+order_count = 5000
+product_count = len(product_catalog)
+review_count = 3000
+
 
 #----------------Customer Data Generation----------------#
 
 # Create a function to generate random customer data
 def generate_customers(connection, count):
-
-# Create a list to hold the generated customer data
+    # These lookups let later functions retrieve customer-specific values
+    # without querying the database again.
     customer_registration_dates = {}
+    customer_country_by_id = {}
     customers = []
-
-# Loop through ids from 1 to count and generate random customer data
+    
     for customer_id in range(1, count + 1):
-        first_name = random.choice(first_names)
-        last_name = random.choice(last_names)
-        email = f"{first_name.lower()}.{last_name.lower()}.customer{customer_id}@example.com"
-        country = random.choice(countries)
+        first_name = fake.first_name()
+        last_name = fake.last_name()
+        email = (f"{first_name.lower()}.{last_name.lower()}"f".customer{customer_id}@example.com"
+        )
+        country = fake.country()
         registration_date = random.choice(date_list)
         customer_registration_dates[customer_id] = registration_date
-        customer_segment = random.choice(customer_segments)
+        customer_segment = random.choices(customer_segments, weights = [60,30,10], k=1)[0]
+        customer_country_by_id[customer_id] = country
 
-# Append the generated customer data to the customers list
         customers.append((
             customer_id,
             first_name,
@@ -91,7 +178,7 @@ def generate_customers(connection, count):
             customer_segment
             ))
 
-# Insert the generated customer data into the customers table
+    # Insert all customer rows in one batch after generating them.
     connection.executemany(
         """
         INSERT INTO customers (
@@ -107,32 +194,28 @@ def generate_customers(connection, count):
         customers
     )
 
-    return customer_registration_dates
+    return customer_registration_dates, customer_country_by_id
 
-#----------------Product Data Generation----------------#
-
-# Create a function to generate random product data
-def generate_products(connection, count):
-
-# Create a list to hold the generated product data
+# Generate products before orders because order items reference product IDs.
+def generate_products(connection):
     products = []
     product_created_dates = {}
     product_prices_by_id = {}
 
-# Loop through ids from 1 to count and generate random product data
-    for product_id in range(1, count + 1):
-        product_name = random.choice(product_names)
-        category = random.choice(product_categories)
-        price = random.choice(product_prices)
-        product_prices_by_id[product_id] = price
-        # Cost is a random percentage of the price
+    # Each catalog tuple contains a name, category, and price range. The
+    # database stores only the generated price, not the range itself.
+    for product_id, (product_name, category, minimum_price, maximum_price) in enumerate(product_catalog, start=1):
+        price = round(random.uniform(minimum_price, maximum_price), 2)
         cost = round(price * random.uniform(0.5, 0.9), 2)
-        # Random stock quantity between 10 and 1500 
-        stock_quantity = random.randint(10, 1500)
+        minimum_stock, maximum_stock = stock_ranges[category]
+        stock_quantity = random.randint(minimum_stock, maximum_stock)
         created_date = random.choice(date_list)
+
+        # Keep these values by product ID so order items can use the exact
+        # product price and enforce a valid order date later.
+        product_prices_by_id[product_id] = price
         product_created_dates[product_id] = created_date
 
-# Append the generated product data to the products list
         products.append((
             product_id,
             product_name,
@@ -143,7 +226,7 @@ def generate_products(connection, count):
             created_date
             ))
 
-# Insert the generated product data into the products table
+    # Insert all products in one batch.
     connection.executemany(
         """
         INSERT INTO products (
@@ -161,38 +244,35 @@ def generate_products(connection, count):
 
     return product_created_dates, product_prices_by_id
 
-#----------------Order & Order Items Data Generation----------------#
-
-# Create a function to generate random order & order items data
-def generate_orders_and_items(connection, order_count, customer_registration_dates, product_created_dates, product_prices_by_id):
+# Generate orders and order items together because each order total depends
+# on the items selected for that order.
+def generate_orders_and_items(connection, order_count, customer_registration_dates, customer_country_by_id, product_created_dates, product_prices_by_id):
     
-# Create a list to hold the generated order & order items data
     orders = []
     order_items = []
     next_order_item_id = 1
 
-# Loop through ids from 1 to count and generate random order data
     for order_id in range(1, order_count + 1):
-        # Randomly select a customer and an order date
+        # Choose an existing customer so the orders.customer_id foreign key is valid.
         customer_id = random.choice(list(customer_registration_dates.keys()))
 
-        # identifies the registration date of the selected customer
         customer_registration_date = customer_registration_dates[customer_id]
 
-        # Randomly select a product
+        # Select unique products because order_items forbids duplicate
+        # (order_id, product_id) pairs.
         selected_product_ids = random.sample(list(product_created_dates.keys()), random.randint(1, 5))  
 
-        # identifies the latest product created date among the selected products and the earliest date for the order should be the later of the customer registration date and the latest product created date
+        # An order cannot happen before the customer registered or before any
+        # selected product existed.
         latest_product_created_date = max(product_created_dates[product_id] for product_id in selected_product_ids)
         earliest_order_date = max(customer_registration_date, latest_product_created_date)
 
-        # Generate a random order date between the earliest_order_date and today
         order_date = random.choice([d for d in date_list if d >= earliest_order_date])
-        status = random.choice(order_statuses)
-        shipping_country = random.choice(countries)
+        status = random.choices(order_statuses, weights=[80,15,5],k=1)[0]
+        shipping_country = customer_country_by_id[customer_id]
 
-        # Generate the order total amount based on the selected products and their prices
-
+        # Build each order item first so the order total can be calculated from
+        # the same quantities, prices, and discounts that are stored below.
         total_amount = 0
 
         for product_id in selected_product_ids:
@@ -200,14 +280,14 @@ def generate_orders_and_items(connection, order_count, customer_registration_dat
             unit_price = product_prices_by_id[product_id]
             discount_percentage = random.choice([0, 5, 10, 15])  
 
-            # Calculate the total for this item considering the discount
+            # Round each line item before adding it so monetary values stay at
+            # two decimal places throughout the calculation.
             item_total = round(
                 quantity * unit_price * (1 - discount_percentage / 100),
                 2
             )
             total_amount += item_total
 
-            # Append the generated order item data to the order_items list
             order_items.append((
                 next_order_item_id,
                 order_id,
@@ -218,7 +298,6 @@ def generate_orders_and_items(connection, order_count, customer_registration_dat
             ))
             next_order_item_id += 1
 
-# Append the generated order data to the orders list
         orders.append((
             order_id,
             customer_id,
@@ -228,7 +307,8 @@ def generate_orders_and_items(connection, order_count, customer_registration_dat
             shipping_country
         ))
 
-# Insert the generated order data into the orders table
+    # Insert orders before order_items because order_items.order_id is a
+    # foreign key that references orders.order_id.
     connection.executemany(
         """
         INSERT INTO orders (
@@ -243,7 +323,7 @@ def generate_orders_and_items(connection, order_count, customer_registration_dat
         orders
     )
 
-# Insert the generated order items into the order_items table
+    # Now that the parent orders exist, insert their item rows.
     connection.executemany(
         """
         INSERT INTO order_items (
@@ -258,12 +338,14 @@ def generate_orders_and_items(connection, order_count, customer_registration_dat
         order_items
     )      
 
-#----------------Review Data Generation----------------#
+# Reviews are generated last because they reference both customers and
+# products through completed orders.
 
 def generate_reviews(connection, review_count):
     reviews = []
 
-    #Identify eligible orders for reviews (only completed orders) and select the latest order date for each customer-product pair
+    # A customer can review a product only after buying it in a completed
+    # order. GROUP BY also gives us one eligible row per customer/product pair.
     eligible_pairs = connection.execute(
         """
         SELECT DISTINCT o.customer_id, oi.product_id, max(o.order_date)
@@ -275,18 +357,26 @@ def generate_reviews(connection, review_count):
         """
     ).fetchall()    
 
-    # Determine the number of reviews to generate, ensuring it does not exceed the number of eligible pairs
+    # Do not request more reviews than the number of unique eligible pairs.
     review_count = min(review_count, len(eligible_pairs))
     selected_pairs = random.sample(eligible_pairs, review_count)
 
-    # Generate reviews for the selected customer-product pairs
     for review_id, (customer_id, product_id, latest_order_date) in enumerate(
         selected_pairs, 
         start=1
         ):
         review_date = random.choice([d for d in date_list if d >= latest_order_date])
-        rating = random.randint(1, 5)
-        review_text = random.choice(review_texts)
+        rating = random.choices(
+            [1, 2, 3, 4, 5],
+            weights=[3, 5, 12, 35, 45],
+            k=1
+        )[0]
+        if rating > 3:
+            review_text = random.choice(positive_review_texts)
+        elif rating <=2:
+            review_text = random.choice(negative_review_texts)
+        else:
+            review_text = None
 
         reviews.append((
             review_id,
@@ -312,29 +402,27 @@ def generate_reviews(connection, review_count):
         reviews
     )
 
-# Call the function and generate 1000 customers
-customer_registration_dates = generate_customers(
+# Generate parent tables first, then dependent tables.
+customer_registration_dates, customer_country_by_id = generate_customers(
     connection, 
     customer_count
     )
 
-# Call the function and generate 500 products
 product_created_dates, product_prices_by_id = generate_products(
-    connection, 
-    product_count
+    connection
     )
 
-# Call the orders and order items generation function
 generate_orders_and_items(
     connection,
     order_count,
     customer_registration_dates,
+    customer_country_by_id,
     product_created_dates,
     product_prices_by_id
 )
 
 generate_reviews(connection, review_count)
 
-# Insert the generated data into the tables& close connection
+# Commit all inserts and close the connection cleanly.
 connection.commit()
 connection.close()

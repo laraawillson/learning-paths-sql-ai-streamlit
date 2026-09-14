@@ -150,10 +150,10 @@ The e-commerce database has 5 main tables:
 ## 📚 Learning Path
 
 ### Phase 1: Setup & Understanding (Day 1-2)
-- [ ] Review the database schema
-- [ ] Load sample data
-- [ ] Run simple SELECT queries to explore tables
-- [ ] Understand data relationships
+- [X] Review the database schema
+- [X] Load sample data
+- [X] Run simple SELECT queries to explore tables
+- [X] Understand data relationships
 
 ### Phase 2: Basic Queries (Day 3-5)
 - [ ] Master JOIN operations (INNER, LEFT, RIGHT, FULL)
