@@ -66,28 +66,26 @@ Week 11-16: Integrated Projects
 
 ### Month 2: Intermediate Skills (Weeks 5-8)
 
-#### Week 5-6: AI Intermediate (Scikit-learn)
+#### Week 5-6: AI Intermediate (Python for Tooling + Tableau File Parsing)
 **Time Commitment:** 12-14 hours  
 **Topics:**
-- Scikit-learn algorithms
-- Feature engineering
-- Hyperparameter tuning
-- Model evaluation metrics
+- Python classes/dataclasses for modeling structured data
+- Parsing the `.twb`/`.twbx` file format (zip + XML)
+- Extracting data sources and calculated fields
 - Start: Streamlit fundamentals
 
 **Deliverables:**
-- [ ] Train 3 different ML models
-- [ ] Implement feature engineering
+- [ ] Parse a real `.twbx` workbook into Python objects
+- [ ] Export a calculated-field inventory to CSV
 - [ ] Setup first Streamlit app
-- [ ] Complete 1 Kaggle competition
+- [ ] Validate parsing against Tableau Desktop on the same workbook
 
 **Resources:**
-- Scikit-learn documentation
-- Andrew Ng's ML course (Weeks 1-3)
+- Tableau Document API (Python) docs
+- Real Python: Working with XML
 - Streamlit Getting Started
-- Kaggle datasets
 
-**Mini-Project:** Housing price prediction with scikit-learn
+**Mini-Project:** Tableau File Parser (see [02-ai-development](./02-ai-development/README.md), Project 1)
 
 ---
 
@@ -96,107 +94,105 @@ Week 11-16: Integrated Projects
 **Topics:**
 - Streamlit widgets and state management
 - Caching and performance
-- File upload and processing
+- Database integration (SQLite) for task persistence
 - Query optimization and EXPLAIN ANALYZE
 - Multi-page apps
 
 **Deliverables:**
-- [ ] Build 2-page Streamlit app
-- [ ] Implement caching correctly
+- [ ] Build the 4-column Kanban board (Ideas/Up Next/In Flight/Done) as a 2+ page Streamlit app
+- [ ] Persist tasks in SQLite and implement caching correctly
 - [ ] Optimize 3 slow SQL queries
-- [ ] Upload/download file handling
+- [ ] Implement a workbook linter for the Tableau Assistant (unused fields, hardcoded values, naming)
 
 **Resources:**
 - Streamlit documentation
 - State management guides
-- PostgreSQL EXPLAIN ANALYZE
+- PostgreSQL/SQLite EXPLAIN
 - Custom Streamlit components
 
-**Mini-Project:** Simple data explorer Streamlit app
+**Mini-Project:** Persistent Work Tracker (see [03-streamlit-development](./03-streamlit-development/README.md), Project 2)
 
 ---
 
 ### Month 3: Advanced Techniques (Weeks 9-12)
 
-#### Week 9-10: Advanced SQL + Deep Learning Basics
+#### Week 9-10: Advanced SQL (HR Dataset) + LLM Integration Basics
 **Time Commitment:** 12-14 hours  
 **Topics:**
-- Recursive CTEs
+- Recursive CTEs against the HR dataset (org hierarchy)
 - Advanced indexing
 - Query execution plans
-- Neural networks and PyTorch basics
-- CNNs introduction
+- Calling the Claude API from Python (`anthropic` SDK)
+- Prompt design for structured (JSON) output
 
 **Deliverables:**
-- [ ] Write 2 recursive CTE queries
+- [ ] Write the org hierarchy recursive CTE (span of control, org depth)
 - [ ] Analyze 5 query execution plans
-- [ ] Understand backpropagation
-- [ ] Build simple neural network
+- [ ] Get a calculated-field formula explained in plain English via the Claude API
+- [ ] Return and validate a structured JSON response from a prompt
 
 **Resources:**
 - PostgreSQL advanced documentation
-- PyTorch tutorials
-- Fast.ai Part 1 (Vision)
-- Deep Learning specialization
+- Anthropic API documentation
+- Prompt Engineering Guide
 
-**Mini-Project:** Image classification with CNN
+**Mini-Project:** LLM-Powered Calculation Explainer (see [02-ai-development](./02-ai-development/README.md), Project 3)
 
 ---
 
-#### Week 11-12: Advanced Streamlit + NLP/Transformers
+#### Week 11-12: Advanced Streamlit + AI Jira Ticket Drafting
 **Time Commitment:** 12-14 hours  
 **Topics:**
 - Custom styling and theming
-- Database integration
-- Authentication
-- NLP with transformers
-- Model deployment considerations
+- Multi-page apps with a shared SQLite database
+- Designing a Jira ticket template (Summary, Description, Acceptance Criteria, Priority, Labels)
+- Calling Claude to fill the template from task data
+- Draft review/edit UI before accepting a ticket
 
 **Deliverables:**
-- [ ] Build styled multi-page app with database
-- [ ] Implement basic authentication
-- [ ] Fine-tune a transformer model
-- [ ] Deploy model endpoint
+- [ ] Build a styled multi-page tracker app with database persistence
+- [ ] Add the "Draft Jira Ticket" action with a fixed prompt template
+- [ ] Display and allow edits to the AI-drafted ticket
+- [ ] (Stretch) Push an accepted draft into Jira via its REST API
 
 **Resources:**
 - Advanced Streamlit patterns
-- Hugging Face Transformers
+- Anthropic API documentation
+- Jira REST API documentation
 - SQLAlchemy tutorials
-- Docker basics
 
-**Mini-Project:** Sentiment analysis app with Streamlit
+**Mini-Project:** AI Jira Ticket Drafting (see [03-streamlit-development](./03-streamlit-development/README.md), Project 3)
 
 ---
 
 ### Months 4-5: Integration & Specialization (Weeks 13-20)
 
-#### Week 13-14: First Integrated Project
-**Project:** Predictive Analytics Dashboard  
-**Time Commitment:** 15-18 hours  
-**Skills Integration:**
-- SQL: Data extraction and aggregation
-- AI: Time series forecasting model
-- Streamlit: Interactive visualization
-
----
-
-#### Week 15-16: Second Integrated Project
-**Project:** Sentiment Analysis Pipeline  
-**Time Commitment:** 15-18 hours  
-**Skills Integration:**
-- SQL: Text storage and query optimization
-- AI: NLP model fine-tuning
-- Streamlit: Batch and real-time processing
-
----
-
-#### Week 17-20: Advanced Integrated Project
-**Project:** Customer Analytics Platform  
+#### Week 13-16: First Integrated Project (Flagship)
+**Project:** Work Tracker + AI Jira Ticket Generator  
 **Time Commitment:** 20-25 hours  
 **Skills Integration:**
-- SQL: Complex aggregations and cohort analysis
-- AI: Clustering and churn prediction
-- Streamlit: Multi-page analytics dashboard
+- SQL: Task and status-history schema, reporting queries
+- AI: Claude API for ticket drafting and weekly-summary generation
+- Streamlit: Multi-page Kanban board with draft review UI
+
+---
+
+#### Week 17-18: Second Integrated Project
+**Project:** Tableau Workbook Assistant, Streamlit Front End  
+**Time Commitment:** 12-15 hours  
+**Skills Integration:**
+- AI: Reuse the parser/linter/LLM-review pipeline from Path 2
+- Streamlit: File upload UI, inventory and lint-result display
+
+---
+
+#### Week 19-20: Third Integrated Project
+**Project:** HR Analytics Dashboard  
+**Time Commitment:** 12-15 hours  
+**Skills Integration:**
+- SQL: Org-hierarchy and workforce-trend queries from Path 1
+- AI: Optional LLM-generated narrative summary of the numbers
+- Streamlit: Org chart, headcount/attrition visualizations
 
 ---
 
@@ -211,16 +207,15 @@ Week 11-16: Integrated Projects
 
 ### Milestone 2: AI Fundamentals ✓
 **After Week 8**
-- [ ] Train ML models with scikit-learn
-- [ ] Perform feature engineering
-- [ ] Tune hyperparameters
-- [ ] Evaluate model performance
+- [ ] Parse a Tableau `.twbx` workbook into Python objects
+- [ ] Implement rule-based workbook lint checks
+- [ ] Call the Claude API and get structured JSON output
 - [ ] Build first Streamlit app
 
 ### Milestone 3: Full Stack Skills ✓
 **After Week 12**
-- [ ] Advanced SQL optimization
-- [ ] Deep learning models (PyTorch)
+- [ ] Advanced SQL optimization (HR dataset)
+- [ ] LLM-powered calculation explanations and Jira ticket drafts
 - [ ] Advanced Streamlit apps
 - [ ] Database integration
 
@@ -258,9 +253,9 @@ As you progress, build within the provided structure:
 
 04-integrated-projects/
 └── full-stack-examples/
-    ├── predictive-analytics/     ← Weeks 13-14
-    ├── sentiment-analysis/       ← Weeks 15-16
-    ├── customer-analytics/       ← Weeks 17-20
+    ├── work-tracker-jira/        ← Weeks 13-16
+    ├── tableau-assistant-ui/     ← Weeks 17-18
+    ├── hr-analytics-dashboard/   ← Weeks 19-20
     └── your-projects/            ← Weeks 21+
 ```
 
@@ -270,10 +265,10 @@ As you progress, build within the provided structure:
 
 | Phase | Duration | Hours | Focus |
 |-------|----------|-------|-------|
-| SQL Foundations | 2 weeks | 18-20 | Queries, optimization |
-| AI Foundations | 4 weeks | 36-40 | ML, Python, fundamentals |
+| SQL Foundations | 2 weeks | 18-20 | Queries, optimization (HR dataset) |
+| AI Foundations | 4 weeks | 36-40 | Python, Tableau file parsing |
 | Streamlit Basics | 4 weeks | 28-32 | Web apps, visualization |
-| Advanced Topics | 4 weeks | 40-44 | Deep learning, optimization |
+| Advanced Topics | 4 weeks | 40-44 | LLM integration, optimization |
 | Integration | 8 weeks | 80-100 | Full-stack projects |
 | **TOTAL** | **20 weeks** | **200-240 hours** | |
 
@@ -285,15 +280,13 @@ After completing the core roadmap:
 
 ### Official Certifications
 - **Google Cloud Professional Data Engineer**
-- **AWS Certified Machine Learning**
-- **TensorFlow Developer Certificate**
 - **Databricks Lakehouse Fundamentals**
+- **Atlassian Certified Jira Administrator** (if going deeper on the Jira integration)
 
 ### Portfolio Building
-- Contribute to open-source ML projects
-- Publish on Medium or Towards Data Science
-- Build public GitHub projects
-- Participate in Kaggle competitions
+- Publish the Tableau Assistant and Work Tracker as public GitHub projects
+- Write up the HR analytics build for a portfolio/blog post
+- Share the tools with your team for real feedback
 
 ---
 
@@ -308,14 +301,14 @@ After completing the core roadmap:
 
 **Best for:** Data engineers, database specialists
 
-### Path B: AI-First (ML Focus)
+### Path B: AI-First (Tooling/LLM Focus)
 1. AI Fundamentals (2 weeks)
 2. AI Intermediate + SQL Basics (6 weeks)
 3. AI Advanced (4 weeks)
 4. Streamlit (3 weeks)
 5. SQL Advanced + Integration (8 weeks)
 
-**Best for:** Machine learning engineers, data scientists
+**Best for:** Building the Tableau Assistant first, before the tracker app
 
 ### Path C: Streamlit-First (App Development Focus)
 1. Streamlit Fundamentals (2 weeks)

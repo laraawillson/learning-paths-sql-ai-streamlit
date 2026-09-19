@@ -1,172 +1,150 @@
 # AI Development Learning Path
 
-Build a strong foundation in machine learning and deep learning, from theory to production-ready models.
+Build strong, practical Python skills by building a real tool: a **Tableau Workbook Review & Assistant app** — a Python application that reads `.twb`/`.twbx` files, understands their structure, flags issues, and uses an LLM to explain and improve calculated fields and workbook design.
+
+This path trades the generic ML curriculum for applied Python + LLM-integration skills, since that's what the target project actually needs.
 
 ## Learning Progression
 
-### 📍 Level 1: Fundamentals (Week 1-2)
-- Python for Data Science (NumPy, Pandas)
-- Machine Learning Basics
-- Supervised vs Unsupervised Learning
-- Training, Validation, Testing
-- Evaluation Metrics
+### 📍 Level 1: Python Foundations for App Building (Week 1-2)
+- Python fundamentals for tooling (not notebooks): modules, classes, dataclasses, type hints
+- Working with files: `zipfile` (a `.twbx` is a zip bundle), `xml.etree.ElementTree` / `lxml`
+- Parsing Tableau's XML structure: datasources, connections, calculated fields, worksheets, dashboards
+- CLI basics with `argparse` or `typer`
 
-### 📍 Level 2: Intermediate (Week 2-5)
-- Scikit-learn Algorithms
-- Feature Engineering
-- Model Selection and Hyperparameter Tuning
-- Ensemble Methods
-- Introduction to Deep Learning (PyTorch/TensorFlow)
+### 📍 Level 2: Workbook Inspection & Linting (Week 3-4)
+- Modeling a workbook as Python objects (`Workbook`, `Datasource`, `CalculatedField`, `Worksheet`)
+- Building an inventory report: every data source, every calculated field and its formula, every worksheet/dashboard
+- Rule-based "linting": unused fields, hardcoded constants in calculations, overly nested `IF`/`CASE` logic, blended data sources (a common performance smell), inconsistent field naming, missing field descriptions
 
-### 📍 Level 3: Advanced (Week 5-8)
-- Deep Neural Networks
-- Computer Vision (CNNs)
-- Natural Language Processing (Transformers)
-- Transfer Learning
-- Model Deployment
+### 📍 Level 3: LLM-Assisted Review (Week 5-6)
+- Calling the Claude API from Python (`anthropic` SDK): auth, prompts, structured output
+- Prompting for plain-English explanations of calculated field formulas
+- Prompting for simplification/optimization suggestions on complex calcs
+- Auto-generating field documentation/descriptions from formula + context
+- Designing prompts that return structured (JSON) output you can act on programmatically
+
+### 📍 Level 4: Packaging & Polish (Week 7-8)
+- Turning the pieces into a single CLI tool: `tableau-review my_workbook.twbx`
+- Output formats: terminal summary, Markdown/HTML report
+- Config for which lint rules and LLM checks to run
+- Testing with `pytest` (sample `.twbx` fixtures)
+- Optional: expose it as a page in the Streamlit app from Path 3, so you can drag-and-drop a workbook and get a report in the browser
 
 ## 📚 Topics Covered
 
-### Fundamentals
-1. **Python Ecosystem**
-   - NumPy arrays and operations
-   - Pandas DataFrames and data manipulation
-   - Matplotlib and Seaborn visualization
-   - SciPy basics
+### Foundations
+1. **Python for Tooling**
+   - Classes and dataclasses to model structured data
+   - Type hints for maintainability
+   - Working with paths, zip archives, and XML
+   - Error handling for malformed/unexpected files
 
-2. **ML Basics**
-   - Supervised Learning
-   - Unsupervised Learning
-   - Reinforcement Learning intro
-   - Bias-Variance Tradeoff
+2. **Understanding the Tableau File Format**
+   - `.twb` (XML workbook) vs. `.twbx` (zipped package with extracts/resources)
+   - Key XML elements: `<datasource>`, `<calculation>`, `<worksheet>`, `<dashboard>`, `<parameter>`
+   - The [`tableaudocumentapi`](https://github.com/tableau/document-api-python) package as a higher-level alternative to raw XML parsing
 
-3. **Core Concepts**
-   - Data preprocessing
-   - Scaling and normalization
-   - Train-test split
-   - Cross-validation
-   - Evaluation metrics (Accuracy, Precision, Recall, F1, AUC-ROC)
+3. **CLI Design**
+   - Argument parsing, subcommands
+   - User-friendly error messages and exit codes
 
-### Intermediate
-4. **Scikit-learn Algorithms**
-   - Linear & Logistic Regression
-   - Decision Trees & Random Forests
-   - SVM
-   - K-Means Clustering
-   - Dimensionality Reduction (PCA)
+### Inspection & Linting
+4. **Structural Extraction**
+   - Walking the XML tree to collect data sources, fields, and calculations
+   - Mapping field dependencies (which calcs reference which fields)
 
-5. **Advanced Preprocessing**
-   - Feature scaling techniques
-   - Feature selection
-   - Handling imbalanced data
-   - Feature engineering strategies
+5. **Lint Rules**
+   - Unused field detection
+   - Hardcoded value detection in formulas
+   - Formula complexity heuristics
+   - Naming convention checks
+   - Data source blending / join risk flags
 
-6. **Model Optimization**
-   - Hyperparameter tuning (Grid Search, Random Search, Bayesian)
-   - Cross-validation strategies
-   - Learning curves
+### LLM Integration
+6. **Prompt Engineering for Code/Formula Review**
+   - Giving the model formula + surrounding context (field name, data source, usage)
+   - Asking for structured JSON responses (explanation, risk level, suggested rewrite)
+   - Handling and validating LLM output before displaying/using it
 
-### Advanced
-7. **Deep Learning Foundations**
-   - Neural network architecture
-   - Backpropagation
-   - Activation functions
-   - Optimization algorithms (SGD, Adam)
-   - Regularization (Dropout, Batch Norm)
+7. **Documentation Generation**
+   - Turning formulas + LLM explanations into a field data dictionary
+   - Exporting as Markdown for sharing with the team
 
-8. **Specialized Domains**
-   - Computer Vision (CNN architecture, Image classification)
-   - NLP (Tokenization, Embeddings, Transformers)
-   - Time Series (RNNs, LSTM, GRU)
-   - Generative Models (VAE, GAN basics)
-
-9. **Production & Deployment**
-   - Model saving and loading
-   - API development for models
-   - Containerization (Docker)
-   - Monitoring and versioning
+### Packaging
+8. **Production Habits**
+   - `pytest` test suite with sample workbooks
+   - `requirements.txt` / dependency management
+   - Config files (which rules to enable)
+   - Logging instead of print statements
 
 ## 🎓 Projects
 
-### Project 1: Iris Flower Classification
-**Level:** Beginner  
-**Skills:** Data loading, preprocessing, multiple classifiers  
-Classic ML project with multiple algorithms comparison.
+### Project 1: Tableau File Parser
+**Level:** Beginner
+**Skills:** File/zip/XML handling, data modeling
+Parse a `.twb`/`.twbx` file and extract every data source and calculated field into Python objects; export the inventory to CSV.
 
-### Project 2: Housing Price Prediction
-**Level:** Intermediate  
-**Skills:** Feature engineering, regression, evaluation  
-Predict house prices with advanced feature engineering.
+### Project 2: Workbook Linter
+**Level:** Intermediate
+**Skills:** Rule-based analysis, dependency graphs
+Implement the rule set above (unused fields, hardcoded values, naming, complexity, blending risk) and produce a workbook health-check report.
 
-### Project 3: Sentiment Analysis (Deep Learning)
-**Level:** Intermediate-Advanced  
-**Skills:** NLP, embeddings, neural networks  
-Build a sentiment classifier using transformers.
+### Project 3: LLM-Powered Calculation Explainer & Optimizer
+**Level:** Intermediate-Advanced
+**Skills:** LLM API integration, prompt design, structured output
+For each calculated field, get a plain-English explanation and an optional simplified/optimized rewrite from Claude. Auto-generate field documentation.
 
-### Project 4: Image Classification (CNN)
-**Level:** Advanced  
-**Skills:** CNNs, transfer learning, fine-tuning  
-Classify images using pre-trained models.
-
-### Project 5: Time Series Forecasting
-**Level:** Advanced  
-**Skills:** RNNs, temporal patterns, evaluation  
-Forecast stock prices or weather patterns.
+### Project 4: Tableau Workbook Assistant (full tool)
+**Level:** Advanced
+**Skills:** CLI packaging, testing, integration
+Combine the parser, linter, and LLM reviewer into one CLI tool (and optionally a Streamlit front end) that takes a workbook and produces a full review report.
 
 ## 💻 Tech Stack
 
 ### Core Libraries
-- **Data:** NumPy, Pandas, SciPy
-- **ML:** Scikit-learn
-- **DL:** PyTorch, TensorFlow/Keras
-- **NLP:** Hugging Face Transformers, spaCy
-- **Visualization:** Matplotlib, Seaborn, Plotly
+- **File parsing:** `zipfile`, `xml.etree.ElementTree` or `lxml`, `tableaudocumentapi`
+- **LLM:** `anthropic` Python SDK (Claude)
+- **CLI:** `argparse` or `typer`
+- **Data/reporting:** `pandas` for tabular exports, `Jinja2` or Markdown for report generation
+- **Testing:** `pytest`
 
 ### Tools
-- Jupyter Notebook
-- Google Colab
 - VS Code
-- Weights & Biases (experiment tracking)
+- Sample `.twbx` workbooks (your own, or Tableau's public sample workbooks) for test fixtures
+- Tableau Desktop (to inspect ground truth while validating parsing logic)
 
 ## 💡 Learning Tips
 
-1. **Understand the math** - Know why algorithms work
-2. **Start simple** - Master linear models before deep learning
-3. **Experiment often** - Try different approaches
-4. **Use real data** - Kaggle, UCI ML Repository
-5. **Read papers** - Understand cutting-edge techniques
-6. **Build projects** - Apply theory to real problems
+1. **Start with one real workbook** - Pick a `.twbx` you actually use and get the parser working against it first
+2. **Validate against Tableau itself** - Open the workbook in Tableau Desktop side-by-side to confirm your parser reads it correctly
+3. **Design prompts iteratively** - Treat prompt-writing as its own coding task; test on varied formula complexity
+4. **Keep LLM output structured** - Ask for JSON, validate it, don't trust free text for anything you'll act on programmatically
+5. **Build the CLI early** - Even a rough CLI makes it much easier to test against multiple workbooks as you go
 
 ## 📖 Resources
 
-### Courses
-- [Fast.ai Practical Deep Learning](https://course.fast.ai/)
-- [Andrew Ng's Machine Learning Course](https://www.coursera.org/learn/machine-learning)
-- [DeepLearning.AI](https://www.deeplearning.ai/)
+### Tableau File Format
+- [Tableau Document API (Python)](https://github.com/tableau/document-api-python)
+- [Tableau's `.twb` XML reference (community documentation)](https://www.tableau.com/support)
 
-### Documentation
-- [PyTorch Documentation](https://pytorch.org/docs/)
-- [TensorFlow Documentation](https://www.tensorflow.org/guide)
-- [Scikit-learn Documentation](https://scikit-learn.org/stable/documentation.html)
-- [Hugging Face Transformers](https://huggingface.co/docs/transformers/)
+### LLM/Anthropic
+- [Anthropic API Documentation](https://docs.claude.com/)
+- [Claude Python SDK](https://github.com/anthropics/anthropic-sdk-python)
+- [Prompt Engineering Guide](https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview)
 
-### Practice
-- [Kaggle Competitions](https://www.kaggle.com/competitions)
-- [Kaggle Datasets](https://www.kaggle.com/datasets)
-- [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/)
-
-### Books
-- "Hands-On Machine Learning" by Aurélien Géron
-- "Deep Learning" by Goodfellow, Bengio, Courville
-- "Natural Language Processing with Transformers" by Lewis Tunstall
+### Python
+- [Real Python: Working with XML](https://realpython.com/python-xml-parser/)
+- [Python `zipfile` docs](https://docs.python.org/3/library/zipfile.html)
+- [`typer` documentation](https://typer.tiangolo.com/)
 
 ## 🚀 Next Steps
 
 After completing this path:
-1. Apply your skills with **Advanced SQL** for data preparation
-2. Build interactive interfaces with **Streamlit**
-3. Create full-stack AI applications in **Integrated Projects**
+1. Apply **Advanced SQL** skills if the assistant ever needs to log review history or metrics in a database
+2. Build a **Streamlit** front end for the assistant, or fold it into the work tracker app
+3. Treat the finished assistant as one of the **Integrated Projects**
 
 ---
 
-**Ready to start?** Navigate to `fundamentals/` and begin your ML journey!
+**Ready to start?** Grab a real `.twbx` file and start Project 1 — get the calculated fields printed to the console.

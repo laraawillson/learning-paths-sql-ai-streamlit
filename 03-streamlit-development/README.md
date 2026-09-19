@@ -1,180 +1,152 @@
 # Streamlit Development Learning Path
 
-Build interactive web applications for data visualization and AI model deployment with minimal code.
+Build a personal **work productivity tracker**: a Streamlit app to track work you've done, work in flight, what's up next, and ideas — with a built-in flow to turn a tracked task into a Jira ticket using an LLM and a template.
 
 ## Learning Progression
 
 ### 📍 Level 1: Fundamentals (Week 1)
-- Streamlit Basics
-- Layout and Components
-- Data Display (Tables, Charts)
-- User Input (Widgets)
-- Running and Deploying Apps
+- Streamlit basics, layout, and components
+- Forms and widgets for creating/editing tasks
+- Session state for an in-memory Kanban board (Ideas / Up Next / In Flight / Done)
+- Running the app locally
 
 ### 📍 Level 2: Intermediate (Week 2-3)
-- State Management
-- Caching and Performance
-- Custom Styling and Theming
-- File Upload and Processing
-- Multiple Pages (Multipage Apps)
+- Persisting tasks in SQLite (reuses **Advanced SQL** skills) instead of session state
+- Multi-page app: Tracker board, Ideas backlog, Weekly summary/report
+- Filtering and sorting by tag, priority, project/initiative, due date
+- Caching (`@st.cache_data`/`@st.cache_resource`) for DB reads
 
-### 📍 Level 3: Advanced (Week 3-4)
-- Session State Deep Dive
-- Custom Components
-- Authentication & Authorization
-- Database Integration
-- Production Deployment Strategies
+### 📍 Level 3: Advanced (Week 4-5)
+- LLM-powered "Draft Jira Ticket" action on any task
+- Designing a reusable Jira ticket template (Summary, Description, Acceptance Criteria, Priority, Labels, Story Points)
+- Calling the Claude API to fill the template from a task's tracked details
+- Reviewing/editing the AI-drafted ticket before it's finalized
+
+### 📍 Level 4: Integration & Polish (Week 6+)
+- Optional: push the drafted ticket directly into Jira via the Jira REST API, and store the returned ticket key/link back on the task
+- Weekly status report generator: summarize the Done column into a stand-up/1:1-ready recap
+- Styling/theming, error handling, and (if ever shared beyond yourself) basic auth
 
 ## 📚 Topics Covered
 
 ### Fundamentals
 1. **Getting Started**
    - Installation and setup
-   - Your first app
-   - Running with `streamlit run`
-   - Understanding the execution model
+   - Your first app: a 4-column Kanban board
+   - Understanding the rerun execution model
 
 2. **Core Components**
    - Text elements (title, header, subheader, write)
-   - Input widgets (button, text_input, slider, selectbox)
-   - Data display (dataframe, table, metric, chart)
-   - Columns and containers
+   - Input widgets (button, text_input, text_area, selectbox, date_input)
+   - `st.form` for adding/editing a task without partial reruns
+   - Columns/containers for the board layout
 
-3. **Data Visualization**
-   - st.line_chart, st.bar_chart
-   - st.area_chart, st.scatter_chart
-   - Plotly integration
-   - Altair charts
-   - Map visualization
+3. **Task Data Model**
+   - Fields: title, description, status (Idea/Up Next/In Flight/Done), tags, priority, created/updated dates, linked Jira ticket key
+   - Moving a task between statuses
 
 ### Intermediate
-4. **Advanced Widgets**
-   - File uploaders
-   - Date and time pickers
-   - Multiselect
-   - Radio buttons
-   - Checkboxes
-   - Forms
-
-5. **State Management**
+4. **State Management**
    - Session state basics
-   - Handling form state
-   - Persisting data across reruns
-   - Callback functions
+   - Handling form state and edits
+   - Callback functions for status changes
 
-6. **Performance**
-   - @st.cache_data decorator
-   - @st.cache_resource decorator
-   - When and how to use caching
-   - Avoiding common pitfalls
+5. **Persistence**
+   - SQLite schema for tasks (and a status-change history/audit table)
+   - SQLAlchemy or raw `sqlite3` for reads/writes
+   - Query caching
 
-7. **Multi-page Apps**
-   - Pages directory structure
-   - Navigation between pages
-   - Shared state across pages
-   - Page configuration
+6. **Multi-page Apps**
+   - Pages directory structure: Board, Backlog/Ideas, Reports
+   - Shared state/config across pages
 
 ### Advanced
-8. **Custom Styling**
-   - Markdown and HTML
-   - CSS styling
-   - Custom themes
-   - st.set_page_config options
+7. **LLM Integration**
+   - Calling the Claude API from a Streamlit callback
+   - Prompt template: task details in, structured Jira-ticket fields out
+   - Displaying and editing the draft before accepting it
+   - Handling API errors/timeouts gracefully in the UI
 
-9. **Database Integration**
-   - SQLite integration
-   - PostgreSQL connection
-   - Query caching
-   - Data persistence
+8. **Jira Integration (optional stretch)**
+   - Jira REST API auth (API token)
+   - Creating an issue from the accepted draft
+   - Storing the returned issue key and syncing status back
 
-10. **Deployment**
-    - Streamlit Cloud
-    - Docker containerization
-    - AWS/GCP/Azure deployment
-    - Environment variables and secrets
+9. **Reporting**
+   - Summarizing completed tasks into a weekly recap (optionally LLM-assisted)
+   - Simple charts: tasks completed per week, time-in-status
 
 ## 🎓 Projects
 
-### Project 1: Simple Data Explorer
-**Level:** Beginner  
-**Skills:** File upload, data display, basic filtering  
-Upload CSV files and explore with interactive visualizations.
+### Project 1: Work Tracker (Kanban MVP)
+**Level:** Beginner
+**Skills:** Forms, widgets, session state
+Four-column board (Ideas / Up Next / In Flight / Done); add, edit, and move tasks in memory.
 
-### Project 2: Stock Price Dashboard
-**Level:** Intermediate  
-**Skills:** APIs, caching, multiple visualizations, state  
-Fetch and visualize stock prices with real-time updates.
+### Project 2: Persistent Tracker with SQLite
+**Level:** Intermediate
+**Skills:** Database integration, multi-page apps, caching
+Move storage to SQLite, add a status-change history table, and split the app into Board / Backlog / Reports pages with filtering.
 
-### Project 3: ML Model Interface
-**Level:** Intermediate-Advanced  
-**Skills:** Model loading, predictions, form handling  
-Create an interface for your trained ML models.
+### Project 3: AI Jira Ticket Drafting
+**Level:** Intermediate-Advanced
+**Skills:** LLM API integration, prompt templates, form review/edit flow
+Add a "Draft Jira Ticket" button per task that calls Claude with a fixed template and returns an editable draft (Summary, Description, Acceptance Criteria, Priority, Labels, Story Points).
 
-### Project 4: Multi-page Analytics App
-**Level:** Advanced  
-**Skills:** Multiple pages, database, authentication  
-Build a complete analytics platform with different views.
+### Project 4: Jira API Auto-Creation *(stretch)*
+**Level:** Advanced
+**Skills:** REST API integration, external service auth
+Push the accepted draft into Jira via its REST API and store the resulting ticket key/link on the task.
 
-### Project 5: Real-time Monitoring Dashboard
-**Level:** Advanced  
-**Skills:** Streaming data, live updates, WebSocket handling  
-Monitor system metrics or data streams in real-time.
+### Project 5: Weekly Status Report Generator *(stretch)*
+**Level:** Advanced
+**Skills:** LLM summarization, reporting
+Auto-summarize the week's completed and in-flight work into a stand-up- or 1:1-ready recap.
 
 ## 💻 Tech Stack
 
 ### Core
-- **Streamlit** - Web framework
-- **Pandas** - Data manipulation
-- **NumPy** - Numerical computing
-- **Plotly/Altair** - Advanced visualization
+- **Streamlit** — web framework
+- **SQLite** — task storage (via `sqlite3` or SQLAlchemy)
+- **Pandas** — for reports/summary views
 
-### Extensions
-- **Streamlit-authenticator** - Authentication
-- **st_pages** - Enhanced multipage support
-- **streamlit-aggrid** - Interactive tables
-- **Streamlit Components** - Custom components
-
-### Data & Databases
-- **SQLAlchemy** - ORM and database toolkit
-- **SQLite** - Embedded database
-- **PostgreSQL** - Production database
+### Integrations
+- **`anthropic` Python SDK** — LLM calls for ticket drafting and weekly summaries
+- **Jira REST API** (`requests`, or the `jira` package) — optional ticket creation
 
 ## 💡 Learning Tips
 
-1. **Build as you learn** - Create small projects immediately
-2. **Focus on the data story** - Good visualization > flashy design
-3. **Master state management** - It's key to interactive apps
-4. **Cache wisely** - Understand what should be cached
-5. **Test locally first** - Always test before deploying
-6. **Use multipage apps** - Organize complex applications
+1. **Build the board first** - Get the Kanban UI working in memory before adding a database
+2. **Model the task schema early** - Decide task fields before wiring up persistence, since the LLM template depends on them
+3. **Treat the Jira template as a contract** - Keep the fields the LLM must fill fixed and explicit so drafts stay consistent
+4. **Cache wisely** - Understand what should be cached when reading from SQLite
+5. **Test locally first** - Always test before relying on it day-to-day
 
 ## 📖 Resources
 
 ### Documentation
 - [Streamlit Official Docs](https://docs.streamlit.io/)
-- [Streamlit Components](https://streamlit.io/components)
+- [Streamlit Multipage Apps](https://docs.streamlit.io/develop/concepts/multipage-apps)
 - [Streamlit Cheat Sheet](https://docs.streamlit.io/library/cheatsheet)
 
-### Galleries & Examples
-- [Streamlit Gallery](https://streamlit.io/gallery)
-- [Streamlit Community Cloud Examples](https://discuss.streamlit.io/)
-- [Awesome Streamlit](https://github.com/MarcSkovMadsen/awesome-streamlit)
+### LLM/Anthropic
+- [Anthropic API Documentation](https://docs.claude.com/)
+- [Claude Python SDK](https://github.com/anthropics/anthropic-sdk-python)
 
-### Tutorials
-- [Streamlit University](https://discuss.streamlit.io/t/streamlit-university/)
-- [Create Web Apps with Streamlit](https://www.datacamp.com/courses/create-web-apps-with-streamlit)
+### Jira
+- [Jira REST API Documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/)
+- [`jira` Python package](https://jira.readthedocs.io/)
 
-### Deployment
-- [Streamlit Cloud Docs](https://docs.streamlit.io/streamlit-cloud/)
-- [Docker Deployment Guide](https://docs.streamlit.io/knowledge-base/tutorials/deploy/docker)
+### Database
+- [SQLAlchemy Documentation](https://docs.sqlalchemy.org/)
 
 ## 🚀 Next Steps
 
 After completing this path:
-1. Combine with **Advanced SQL** for data pipelines
-2. Integrate **AI Models** for predictions and analysis
-3. Build complete systems in **Integrated Projects**
+1. Reuse **Advanced SQL** query patterns for the reporting page
+2. Reuse **AI Development** LLM-integration patterns from the Tableau Assistant for the ticket-drafting flow
+3. Treat the finished tracker as the flagship **Integrated Project**
 
 ---
 
-**Ready to start?** Navigate to `fundamentals/` and build your first Streamlit app!
+**Ready to start?** Build the 4-column board with hardcoded sample tasks first, then wire up `st.form` to add real ones.

@@ -33,19 +33,19 @@ A comprehensive, structured guide to mastering Advanced SQL, AI Development, and
 
 ### Path 1: Advanced SQL
 **Duration:** 4-6 weeks  
-**Skills:** Database design, query optimization, window functions, CTEs, performance tuning
+**Skills:** Database design, query optimization, window functions, CTEs, recursive queries — practiced against an HR dataset (org hierarchy, workforce trends, attrition)
 
 ### Path 2: AI Development
 **Duration:** 6-8 weeks  
-**Skills:** Machine learning fundamentals, deep learning, model deployment, fine-tuning
+**Skills:** Python for tooling, parsing the Tableau `.twb`/`.twbx` file format, LLM (Claude API) integration — building a Tableau Workbook Review & Assistant app
 
 ### Path 3: Streamlit Development
 **Duration:** 3-4 weeks  
-**Skills:** Interactive apps, data visualization, deployment, state management
+**Skills:** Interactive apps, database integration, LLM integration — building a personal work tracker with AI-drafted Jira tickets
 
 ### Path 4: Integrated Full-Stack Projects
 **Duration:** 4-6 weeks  
-**Skills:** Combining SQL, AI, and Streamlit into production applications
+**Skills:** Combining SQL, AI, and Streamlit into production applications — the Work Tracker + AI Jira Ticket Generator, the Tableau Assistant UI, and an HR analytics dashboard
 
 ## 🚀 Quick Start
 
@@ -71,9 +71,9 @@ A comprehensive, structured guide to mastering Advanced SQL, AI Development, and
 
 ## 🛠️ Technologies & Tools
 
-**SQL:** PostgreSQL, SQLite, DuckDB  
-**AI/ML:** Python, PyTorch, TensorFlow, Scikit-learn, Hugging Face  
-**Streamlit:** Streamlit, Pandas, Plotly, NumPy  
+**SQL:** SQLite, PostgreSQL  
+**AI:** Python, `anthropic` SDK (Claude API), `tableaudocumentapi`, `lxml`  
+**Streamlit:** Streamlit, Pandas, SQLAlchemy, Jira REST API  
 
 ## 📝 How to Use This Repository
 
@@ -94,11 +94,10 @@ Feel free to:
 ## 📚 Additional Resources
 
 - [SQL Official Documentation](https://www.postgresql.org/docs/)
-- [PyTorch Documentation](https://pytorch.org/docs/)
+- [Anthropic API Documentation](https://docs.claude.com/)
+- [Tableau Document API (Python)](https://github.com/tableau/document-api-python)
 - [Streamlit Documentation](https://docs.streamlit.io/)
-- [Hugging Face Transformers](https://huggingface.co/docs/transformers/)
-- [Fast.ai Courses](https://course.fast.ai/)
-- [Andrew Ng's ML Specialization](https://www.coursera.org/specializations/machine-learning-introduction)
+- [Jira REST API Documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/)
 
 ## 📅 Estimated Time Commitment
 

@@ -1,126 +1,61 @@
 # Integrated Projects: SQL + AI + Streamlit
 
-Apply all three skills together to build complete, production-ready applications.
+Apply all three skills together to build complete, real tools you'll actually use for work.
 
 ## Project-Based Learning
 
-These projects combine Advanced SQL for data, AI for intelligence, and Streamlit for interfaces.
+These projects combine Advanced SQL for data, Python/LLM integration for intelligence, and Streamlit for interfaces — built around HR analytics, Tableau workbook review, and personal work tracking rather than generic datasets.
 
 ## 🚀 Project Ideas
 
-### Project 1: Predictive Analytics Dashboard
-**Difficulty:** Intermediate  
-**Duration:** 2-3 weeks  
+### Project 1: Work Tracker + AI Jira Ticket Generator ⭐ *(flagship)*
+**Difficulty:** Intermediate-Advanced
+**Duration:** 4-6 weeks
 
 **Components:**
-- SQL: Query historical data, prepare datasets
-- AI: Train time series forecasting model (LSTM/Prophet)
-- Streamlit: Interactive dashboard with predictions
+- SQL: SQLite schema for tasks and status-change history; queries for the reporting page
+- AI: Claude API call that turns a tracked task into a structured Jira ticket draft (Summary, Description, Acceptance Criteria, Priority, Labels, Story Points); optional weekly-summary generation
+- Streamlit: Kanban board (Ideas / Up Next / In Flight / Done), multi-page app, ticket-draft review UI
 
 **Skills Developed:**
-- Data pipeline from database to model
-- Feature engineering from SQL queries
-- Model deployment in web interface
-- Real-time prediction updates
+- Designing a task data model and persisting it
+- Prompt templates for structured LLM output
+- Multi-page Streamlit apps with shared state
+- (Stretch) Jira REST API integration to create tickets directly
 
-**Dataset Suggestions:**
-- Stock prices
-- Weather data
-- Sales forecasts
-- Web traffic
+This is the natural integration point for all three learning paths — see [`03-streamlit-development/README.md`](../03-streamlit-development/README.md) for the full project breakdown.
 
 ---
 
-### Project 2: Sentiment Analysis Pipeline
-**Difficulty:** Intermediate  
-**Duration:** 2-3 weeks  
+### Project 2: Tableau Workbook Assistant, Streamlit Front End
+**Difficulty:** Intermediate-Advanced
+**Duration:** 2-3 weeks
 
 **Components:**
-- SQL: Store and retrieve text data, track sentiment history
-- AI: NLP model (transformers) for sentiment classification
-- Streamlit: Upload, analyze, visualize sentiment trends
+- SQL: optional — log review history/metrics per workbook if you want trends over time
+- AI: the parser/linter/LLM-review pipeline built in [`02-ai-development/`](../02-ai-development/README.md)
+- Streamlit: upload a `.twbx`, display the inventory and lint results, show the LLM's field explanations/suggestions
 
 **Skills Developed:**
-- Text preprocessing at scale
-- NLP model deployment
-- Sentiment tracking and trends
-- Batch and real-time processing
-
-**Dataset Suggestions:**
-- Product reviews
-- Social media comments
-- Customer feedback
-- News articles
+- Wrapping an existing Python tool in a web UI
+- File upload handling (`st.file_uploader` for zip-based `.twbx` files)
+- Presenting LLM output (explanations, suggested rewrites) in a readable, actionable layout
 
 ---
 
-### Project 3: Recommendation Engine
-**Difficulty:** Advanced  
-**Duration:** 3-4 weeks  
+### Project 3: HR Analytics Dashboard
+**Difficulty:** Intermediate
+**Duration:** 2-3 weeks
 
 **Components:**
-- SQL: Complex queries for user-product interactions, collaborative filtering
-- AI: Recommendation algorithms (content-based, CF, hybrid)
-- Streamlit: User interface for recommendations
+- SQL: the org-hierarchy and workforce-trend queries from [`01-advanced-sql/`](../01-advanced-sql/README.md) (Projects 2 & 3)
+- AI: optional — LLM-generated plain-English narrative summary of the current headcount/attrition numbers
+- Streamlit: interactive org chart, headcount trend charts, attrition/turnover views, filters by department
 
 **Skills Developed:**
-- Building SQL queries for similarity computation
-- Implementing multiple recommendation approaches
-- A/B testing recommendations
-- Performance optimization
-
-**Dataset Suggestions:**
-- Movie ratings
-- E-commerce products
-- Music streaming
-- News articles
-
----
-
-### Project 4: Anomaly Detection System
-**Difficulty:** Advanced  
-**Duration:** 3-4 weeks  
-
-**Components:**
-- SQL: Time series data aggregation, anomaly logging
-- AI: Anomaly detection models (Isolation Forest, Autoencoders, LOF)
-- Streamlit: Real-time monitoring dashboard
-
-**Skills Developed:**
-- Time series feature engineering with SQL
-- Multiple anomaly detection algorithms
-- Real-time monitoring and alerts
-- Threshold tuning and calibration
-
-**Dataset Suggestions:**
-- Server metrics
-- Network traffic
-- Sensor data
-- Financial transactions
-
----
-
-### Project 5: Customer Analytics Platform
-**Difficulty:** Advanced  
-**Duration:** 4-6 weeks  
-
-**Components:**
-- SQL: Complex aggregations, cohort analysis, RFM segmentation
-- AI: Clustering (K-means), classification for churn prediction
-- Streamlit: Multi-page analytics platform
-
-**Skills Developed:**
-- Advanced SQL for business analytics
-- Behavioral segmentation
-- Churn prediction models
-- Executive dashboards
-
-**Features:**
-- Customer segmentation
-- RFM analysis
-- Cohort analysis
-- Churn prediction
-- Lifetime value prediction
+- Turning recursive-CTE org data into a visual hierarchy
+- Time-series charts from SQL window-function output
+- Building a dashboard aimed at a real audience (yourself, or an HR stakeholder)
 
 ---
 
@@ -138,11 +73,11 @@ project-name/
 ├── sql/
 │   ├── schema.sql     # Database schema
 │   └── queries.sql    # Key queries
-├── models/
-│   ├── train.py       # Training script
-│   └── model.pkl      # Saved model
+├── ai/
+│   ├── prompts.py      # LLM prompt templates
+│   └── client.py       # LLM API wrapper
 ├── app.py             # Streamlit application
-└── config.py          # Configuration
+└── config.py            # Configuration
 ```
 
 ## 🎯 Implementation Steps (for any project)
@@ -156,19 +91,18 @@ project-name/
   - Feature engineering
 - [ ] Validate data quality
 
-### Phase 2: AI Model (Week 2-3)
-- [ ] Explore and analyze data
-- [ ] Feature engineering
-- [ ] Model selection and training
-- [ ] Hyperparameter tuning
-- [ ] Evaluation and validation
-- [ ] Save trained model
+### Phase 2: AI/LLM Integration (Week 2-3)
+- [ ] Define the task the AI component performs (explain, draft, summarize, classify)
+- [ ] Design the prompt/template and desired output shape
+- [ ] Wire up the API call and handle errors/timeouts
+- [ ] Validate output quality on real examples
+- [ ] Decide what, if anything, gets persisted back to SQL
 
 ### Phase 3: Streamlit Interface (Week 3-4)
 - [ ] Design app layout
 - [ ] Implement data loading
 - [ ] Build visualizations
-- [ ] Integrate model predictions
+- [ ] Integrate the AI component into the UI
 - [ ] Add user interactions
 - [ ] Test thoroughly
 
@@ -184,16 +118,14 @@ project-name/
 
 ### End-to-End Examples
 - [Real Python Tutorials](https://realpython.com/)
-- [Towards Data Science](https://towardsdatascience.com/)
-- [Analytics Vidhya](https://www.analyticsvidhya.com/)
+- [Anthropic Cookbook](https://github.com/anthropics/anthropic-cookbook)
 
 ### Architecture Patterns
-- [ML Systems Design](https://github.com/chiphuyen/machine-learning-systems-design)
-- [Production ML Systems](https://madewithml.com/)
+- [Anthropic: Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
 
 ### Deployment Guides
 - [Streamlit Cloud Deployment](https://docs.streamlit.io/streamlit-cloud/)
-- [Docker for ML Apps](https://docs.docker.com/)
+- [Docker for Python Apps](https://docs.docker.com/)
 - [Database Best Practices](https://www.postgresql.org/docs/current/tutorial.html)
 
 ## 🏆 Best Practices
@@ -205,14 +137,13 @@ project-name/
 - ✅ Validate data quality
 - ❌ Avoid N+1 queries in loops
 
-### AI Best Practices
-- ✅ Split data properly (train/val/test)
-- ✅ Document model performance
-- ✅ Version your models
-- ✅ Handle edge cases
-- ✅ Monitor model drift
-- ❌ Don't train on test data
-- ❌ Ignore class imbalance
+### AI/LLM Best Practices
+- ✅ Ask for structured (JSON) output when the result will be used programmatically
+- ✅ Validate LLM output before displaying or acting on it
+- ✅ Keep prompt templates version-controlled alongside the code
+- ✅ Handle API errors/timeouts gracefully in the UI
+- ❌ Don't trust free-text output for anything downstream logic depends on
+- ❌ Don't hardcode API keys — use environment variables/secrets
 
 ### Streamlit Best Practices
 - ✅ Use session state for interactivity
@@ -221,33 +152,29 @@ project-name/
 - ✅ Validate user inputs
 - ✅ Provide clear error messages
 - ❌ Don't perform heavy computation on every rerun
-- ❌ Don't store models in code
+- ❌ Don't store credentials in code
 
 ## 🚀 Deployment Checklist
 
-Before deploying to production:
+Before relying on any of these day-to-day:
 
 - [ ] Code is clean and documented
-- [ ] Environment variables configured
-- [ ] Database credentials secured
+- [ ] Environment variables configured (API keys for Claude/Jira)
+- [ ] Database file backed up or otherwise not a single point of failure
 - [ ] Error handling implemented
 - [ ] Logging enabled
 - [ ] Performance tested
-- [ ] Security reviewed
-- [ ] Tests written and passing
+- [ ] Security reviewed (no secrets in the repo)
 - [ ] README with setup instructions
-- [ ] Monitoring and alerts configured
 
 ## 💡 Tips for Success
 
-1. **Start small** - Begin with a simpler project first
+1. **Start small** - Begin with the MVP of whichever project you pick first
 2. **Iterate quickly** - Build MVP, then enhance
 3. **Version control** - Use git for all projects
 4. **Document as you go** - Make future you happy
-5. **Get feedback** - Share with others early
-6. **Monitor in production** - Track model and app performance
-7. **Keep learning** - Technology evolves constantly
+5. **Use it for real** - The best signal these tools work is using them for actual work
 
 ---
 
-**Ready to integrate?** Choose a project above and start building!
+**Ready to integrate?** Start with Project 1 (Work Tracker + AI Jira Ticket Generator) — it's the one you'll use immediately.
