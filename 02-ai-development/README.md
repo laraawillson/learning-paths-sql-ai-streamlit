@@ -4,6 +4,10 @@ Build strong, practical Python skills by building a real tool: a **Tableau Workb
 
 This path trades the generic ML curriculum for applied Python + LLM-integration skills, since that's what the target project actually needs.
 
+> **Real workbooks, kept local:** the whole point of this tool is reviewing workbooks you actually use, so practice against your own `.twb`/`.twbx` files. Drop them in [`workbooks/`](./workbooks/) — that folder is gitignored and its contents are never committed. Only sample/synthetic workbooks (if you make any) should ever go into git.
+
+> **Vs. Path 4 (AI-Assisted Product Development):** this path teaches *calling* the Claude API from your own Python code (a technical skill). Path 4 teaches *using* AI as your development and planning collaborator while you build things — a different, meta-level skill. You'll use both together here.
+
 ## Learning Progression
 
 ### 📍 Level 1: Python Foundations for App Building (Week 1-2)
@@ -122,6 +126,13 @@ Combine the parser, linter, and LLM reviewer into one CLI tool (and optionally a
 4. **Keep LLM output structured** - Ask for JSON, validate it, don't trust free text for anything you'll act on programmatically
 5. **Build the CLI early** - Even a rough CLI makes it much easier to test against multiple workbooks as you go
 
+## 🤖 Working through this with AI
+
+Default to tutor mode (see [`CLAUDE.md`](../CLAUDE.md)) — attempt the parsing/lint logic yourself first. Example prompts:
+- "Explain how `.twbx` zip structure relates to `.twb` XML, then let me try writing the extraction function before you show me one."
+- "Here's my first pass at the unused-field lint rule [paste]. Don't rewrite it — tell me what edge case it misses and ask me a question that gets me there."
+- "Quiz me on when to use `ElementTree` vs. `tableaudocumentapi` before I pick one for the parser."
+
 ## 📖 Resources
 
 ### Tableau File Format
@@ -140,10 +151,10 @@ Combine the parser, linter, and LLM reviewer into one CLI tool (and optionally a
 
 ## 🚀 Next Steps
 
-After completing this path:
+If you haven't already, build the [Work Tracker MVP](../03-streamlit-development/README.md) first and use it to track this project's tasks. From here:
 1. Apply **Advanced SQL** skills if the assistant ever needs to log review history or metrics in a database
 2. Build a **Streamlit** front end for the assistant, or fold it into the work tracker app
-3. Treat the finished assistant as one of the **Integrated Projects**
+3. Use **AI-Assisted Product Development** to practice the draft-then-review workflow on the linter/LLM-review code
 
 ---
 

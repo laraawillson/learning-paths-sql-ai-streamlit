@@ -1,8 +1,8 @@
 # Advanced SQL Learning Path
 
-Master complex SQL queries, database optimization, and advanced techniques for data analysis and engineering — practiced primarily against **HR datasets** so the skills map directly to real work (headcount reporting, org structure, attrition, comp analysis).
+Master complex SQL queries, database optimization, and advanced techniques for data analysis and engineering — practiced against an **HR-flavored dataset** to keep things realistic instead of generic. HR isn't a specialization goal here; it's just a relatable domain to hang the SQL on. Swap in whatever domain feels real to you if HR ever stops being interesting.
 
-> **Dataset strategy:** Project 1 (E-Commerce Analytics Dashboard) is already complete and stays as-is — it's where JOINs, aggregates, and window function fundamentals were first practiced. Every project and exercise started from here forward uses an **HR dataset** instead of generic e-commerce/retail data, since that's the domain these skills need to support at work.
+> **Dataset strategy:** Project 1 (E-Commerce Analytics Dashboard) is already complete and stays as-is — it's where JOINs, aggregates, and window function fundamentals were first practiced. Every project and exercise started from here forward uses an **HR dataset** instead of generic e-commerce/retail data, mainly because org charts and headcount trends make for more interesting recursive/window-function practice than another product catalog would.
 
 ## Learning Progression
 
@@ -112,10 +112,17 @@ Analyze headcount and turnover over time: month-over-month headcount trend, hire
 ## 💡 Learning Tips
 
 1. **Practice regularly** - SQL skills improve with consistent practice
-2. **Use the HR dataset** - Working against realistic HR data makes the queries directly reusable at work
+2. **Use the HR dataset** - Working against realistic data makes the queries feel less like toy exercises
 3. **Understand EXPLAIN** - Learn to read and optimize query plans
 4. **Think in sets** - SQL is set-based, not procedural
 5. **Test performance** - Always measure query performance on realistic data
+
+## 🤖 Working through this with AI
+
+Default to tutor mode (see [`CLAUDE.md`](../CLAUDE.md)) — try the query yourself first. Example prompts:
+- "Explain recursive CTEs conceptually, then give me 2 practice problems on the org-hierarchy schema before showing me any solution."
+- "Here's my attempt at the attrition window-function query [paste]. Review it without rewriting it — tell me what's wrong and ask me a question that points me at the fix."
+- "Quiz me on the difference between RANK, DENSE_RANK, and ROW_NUMBER with 3 short scenarios before I write the span-of-control query."
 
 ## 📖 Resources
 
@@ -135,10 +142,10 @@ Analyze headcount and turnover over time: month-over-month headcount trend, hire
 
 ## 🚀 Next Steps
 
-After completing this path:
+If you haven't already, build the [Work Tracker MVP](../03-streamlit-development/README.md) first — it's the flagship project, and using it from day one to track this SQL work is the point. From here:
 1. Move to **AI Development** to apply Python skills to the Tableau Workbook Assistant
-2. Learn **Streamlit** to build the work tracker / Jira ticket generator
-3. Combine all three in **Integrated Projects**
+2. Use **AI-Assisted Product Development** to practice the draft-then-review workflow on these queries
+3. Harden the **Streamlit** tracker later, informed by real usage
 
 ---
 
