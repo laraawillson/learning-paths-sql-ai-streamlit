@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+
+# Real Tableau workbook files (work data) — practice against these locally,
+# never commit them. See 02-ai-development/workbooks/README.md.
+*.twb
+*.twbx
+*.hyper
+02-ai-development/workbooks/*
+!02-ai-development/workbooks/README.md
+.vscode/
