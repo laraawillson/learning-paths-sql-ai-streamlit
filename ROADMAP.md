@@ -1,344 +1,164 @@
 # Learning Roadmap
 
-A comprehensive roadmap showing the recommended learning sequence and time commitment.
+A rough sequence for working through this repo — loose weeks to show how the pieces relate in time, not a schedule to fall behind on. No hour quotas, no "complete N by week X." Move at whatever pace works; the [Work Tracker](./03-streamlit-development/README.md) is where your actual day-to-day pacing and status live, not this document.
 
 ## 🗺️ Overview
 
 ```
-Week 1-2: SQL Fundamentals
+Week 1-2:   Work Tracker MVP (build first) + AI-collaboration basics
     ↓
-Week 3-4: SQL Intermediate + AI Fundamentals
+Week 3-4:   SQL Fundamentals (HR-flavored data)
     ↓
-Week 5-6: AI Intermediate + Streamlit Fundamentals
+Week 5-6:   SQL Intermediate + AI Dev: Tableau file parsing
     ↓
-Week 7-8: AI Advanced + Streamlit Intermediate
+Week 7-8:   AI Dev: workbook linter (real workbook) + Tracker: SQLite persistence
     ↓
-Week 9-10: SQL Advanced + Streamlit Advanced
+Week 9-10:  SQL Advanced (org hierarchy) + AI Dev: LLM calculation explainer
     ↓
-Week 11-16: Integrated Projects
+Week 11-12: AI Dev: package as CLI tool + AI-collaboration workflow practice
+    ↓
+Week 13-14: PRD/requirements writing (Work Tracker v2)
+    ↓
+Week 15-16: Tracker: AI Jira ticket drafting, built from that PRD
+    ↓
+Week 17+:   Optional stretch (Jira API, weekly reports, polish)
 ```
 
 ## 📅 Detailed Timeline
 
-### Month 1: Foundations (Weeks 1-4)
+### Week 1-2: Work Tracker MVP + AI-Collaboration Basics
+Build the simplest possible 4-column Kanban board (Ideas / Up Next / In Flight / Done) in Streamlit, using session state — no database yet. Start using it today to track the rest of this roadmap. Alongside it, read through [`CLAUDE.md`](./CLAUDE.md) and [Path 4's](./04-ai-assisted-product-development/README.md) prompting fundamentals so you're working in tutor mode from day one.
 
-#### Week 1-2: Advanced SQL Fundamentals
-**Time Commitment:** 8-10 hours  
-**Topics:**
-- SQL review and core concepts
-- Advanced JOIN operations
-- Subqueries and nested queries
-- Aggregate functions and GROUP BY
+**Roughly aim for:**
+- A working Kanban board you're actually putting real tasks into
+- Comfort with `st.form`, session state, and the Streamlit rerun model
+- A first attempt at structured, tutor-mode prompting
 
-**Deliverables:**
-- [ ] Complete 5 SQL exercises
-- [ ] Build 1 simple query project
-- [ ] Understand EXPLAIN basics
-
-**Resources:**
-- LeetCode 5 easy SQL problems
-- PostgreSQL documentation
-- Mode Analytics SQL Tutorial (first 3 sections)
+**Resources:** Streamlit Getting Started, [Path 3](./03-streamlit-development/README.md) Phase 1, [Path 4](./04-ai-assisted-product-development/README.md) Level 1
 
 ---
 
-#### Week 3-4: SQL Intermediate + AI Foundations
-**Time Commitment:** 10-12 hours  
-**Topics:**
-- Window functions (ROW_NUMBER, RANK, LAG, LEAD)
-- CTEs (Common Table Expressions)
-- Query optimization basics
-- Start: Python fundamentals for ML
+### Week 3-4: SQL Fundamentals (HR-Flavored Data)
+SQL review, JOINs, aggregates — practiced against the HR dataset. Project 1 (E-Commerce Dashboard) is already done and stays as a reference for the workflow.
 
-**Deliverables:**
-- [ ] Master 5 window function patterns
-- [ ] Write 3 CTE-based queries
-- [ ] Setup Python ML environment
-- [ ] Review NumPy and Pandas basics
+**Roughly aim for:**
+- Comfortable writing JOINs and GROUP BY/HAVING queries from scratch
+- Basic EXPLAIN literacy
 
-**Resources:**
-- Window Functions tutorials
-- CTE deep dives
-- Fast.ai Practical Deep Learning (setup)
-- Python for Data Science course
+**Resources:** PostgreSQL documentation, Mode Analytics SQL Tutorial, [Path 1](./01-advanced-sql/README.md)
 
 ---
 
-### Month 2: Intermediate Skills (Weeks 5-8)
+### Week 5-6: SQL Intermediate + AI Dev: Tableau File Parsing
+Window functions and CTEs on the HR dataset. Start the Tableau Workbook Assistant: parsing `.twb`/`.twbx` structure into Python objects.
 
-#### Week 5-6: AI Intermediate (Python for Tooling + Tableau File Parsing)
-**Time Commitment:** 12-14 hours  
-**Topics:**
-- Python classes/dataclasses for modeling structured data
-- Parsing the `.twb`/`.twbx` file format (zip + XML)
-- Extracting data sources and calculated fields
-- Start: Streamlit fundamentals
+**Roughly aim for:**
+- A few window-function and CTE queries against the HR dataset
+- A real `.twbx` workbook (see [`02-ai-development/workbooks/`](./02-ai-development/workbooks/README.md)) parsed into Python objects, validated against Tableau Desktop
 
-**Deliverables:**
-- [ ] Parse a real `.twbx` workbook into Python objects
-- [ ] Export a calculated-field inventory to CSV
-- [ ] Setup first Streamlit app
-- [ ] Validate parsing against Tableau Desktop on the same workbook
-
-**Resources:**
-- Tableau Document API (Python) docs
-- Real Python: Working with XML
-- Streamlit Getting Started
-
-**Mini-Project:** Tableau File Parser (see [02-ai-development](./02-ai-development/README.md), Project 1)
+**Resources:** Window Functions tutorials, Tableau Document API docs, Real Python's XML guide, [Path 1](./01-advanced-sql/README.md), [Path 2](./02-ai-development/README.md) Project 1
 
 ---
 
-#### Week 7-8: Streamlit Intermediate + SQL Optimization
-**Time Commitment:** 10-12 hours  
-**Topics:**
-- Streamlit widgets and state management
-- Caching and performance
-- Database integration (SQLite) for task persistence
-- Query optimization and EXPLAIN ANALYZE
-- Multi-page apps
+### Week 7-8: AI Dev: Workbook Linter + Tracker: SQLite Persistence
+Build the rule-based linter against a real workbook. Separately, move the tracker from session state to SQLite now that you've felt where the in-memory version was annoying.
 
-**Deliverables:**
-- [ ] Build the 4-column Kanban board (Ideas/Up Next/In Flight/Done) as a 2+ page Streamlit app
-- [ ] Persist tasks in SQLite and implement caching correctly
-- [ ] Optimize 3 slow SQL queries
-- [ ] Implement a workbook linter for the Tableau Assistant (unused fields, hardcoded values, naming)
+**Roughly aim for:**
+- A lint report flagging unused fields, hardcoded values, and naming issues on a real workbook
+- The tracker persisting tasks in SQLite across restarts
 
-**Resources:**
-- Streamlit documentation
-- State management guides
-- PostgreSQL/SQLite EXPLAIN
-- Custom Streamlit components
-
-**Mini-Project:** Persistent Work Tracker (see [03-streamlit-development](./03-streamlit-development/README.md), Project 2)
+**Resources:** [Path 2](./02-ai-development/README.md) Project 2, [Path 3](./03-streamlit-development/README.md) Phase 2
 
 ---
 
-### Month 3: Advanced Techniques (Weeks 9-12)
+### Week 9-10: SQL Advanced (Org Hierarchy) + AI Dev: LLM Calculation Explainer
+Recursive CTEs for the org-hierarchy project. Start calling the Claude API from Python to explain calculated-field formulas in plain English with structured output.
 
-#### Week 9-10: Advanced SQL (HR Dataset) + LLM Integration Basics
-**Time Commitment:** 12-14 hours  
-**Topics:**
-- Recursive CTEs against the HR dataset (org hierarchy)
-- Advanced indexing
-- Query execution plans
-- Calling the Claude API from Python (`anthropic` SDK)
-- Prompt design for structured (JSON) output
+**Roughly aim for:**
+- The org-hierarchy recursive CTE (span of control, org depth)
+- A working Claude API call that returns validated structured (JSON) output for at least one real calculated field
 
-**Deliverables:**
-- [ ] Write the org hierarchy recursive CTE (span of control, org depth)
-- [ ] Analyze 5 query execution plans
-- [ ] Get a calculated-field formula explained in plain English via the Claude API
-- [ ] Return and validate a structured JSON response from a prompt
-
-**Resources:**
-- PostgreSQL advanced documentation
-- Anthropic API documentation
-- Prompt Engineering Guide
-
-**Mini-Project:** LLM-Powered Calculation Explainer (see [02-ai-development](./02-ai-development/README.md), Project 3)
+**Resources:** PostgreSQL recursive query docs, Anthropic API documentation, [Path 1](./01-advanced-sql/README.md) Project 2, [Path 2](./02-ai-development/README.md) Project 3
 
 ---
 
-#### Week 11-12: Advanced Streamlit + AI Jira Ticket Drafting
-**Time Commitment:** 12-14 hours  
-**Topics:**
-- Custom styling and theming
-- Multi-page apps with a shared SQLite database
-- Designing a Jira ticket template (Summary, Description, Acceptance Criteria, Priority, Labels)
-- Calling Claude to fill the template from task data
-- Draft review/edit UI before accepting a ticket
+### Week 11-12: AI Dev: CLI Packaging + AI-Collaboration Workflow Practice
+Package the parser/linter/LLM-reviewer into a single CLI tool. In parallel, deliberately practice the draft-then-review workflow (Path 4, Level 2) on real code from this or earlier weeks.
 
-**Deliverables:**
-- [ ] Build a styled multi-page tracker app with database persistence
-- [ ] Add the "Draft Jira Ticket" action with a fixed prompt template
-- [ ] Display and allow edits to the AI-drafted ticket
-- [ ] (Stretch) Push an accepted draft into Jira via its REST API
+**Roughly aim for:**
+- A `tableau-review my_workbook.twbx` CLI that runs end-to-end
+- At least one real code-review practice session comparing your own review to AI's
 
-**Resources:**
-- Advanced Streamlit patterns
-- Anthropic API documentation
-- Jira REST API documentation
-- SQLAlchemy tutorials
-
-**Mini-Project:** AI Jira Ticket Drafting (see [03-streamlit-development](./03-streamlit-development/README.md), Project 3)
+**Resources:** `typer`/`argparse` docs, `pytest` docs, [Path 2](./02-ai-development/README.md) Project 4, [Path 4](./04-ai-assisted-product-development/README.md) Level 2
 
 ---
 
-### Months 4-5: Integration & Specialization (Weeks 13-20)
+### Week 13-14: PRD & Requirements Writing (Work Tracker v2)
+By now you've used the tracker for months. Write a real PRD for its next version based on that experience — problem statement, scope, user stories, acceptance criteria.
 
-#### Week 13-16: First Integrated Project (Flagship)
-**Project:** Work Tracker + AI Jira Ticket Generator  
-**Time Commitment:** 20-25 hours  
-**Skills Integration:**
-- SQL: Task and status-history schema, reporting queries
-- AI: Claude API for ticket drafting and weekly-summary generation
-- Streamlit: Multi-page Kanban board with draft review UI
+**Roughly aim for:**
+- A written PRD for a genuine tracker enhancement
+- User stories with checkable acceptance criteria, not prose
 
----
-
-#### Week 17-18: Second Integrated Project
-**Project:** Tableau Workbook Assistant, Streamlit Front End  
-**Time Commitment:** 12-15 hours  
-**Skills Integration:**
-- AI: Reuse the parser/linter/LLM-review pipeline from Path 2
-- Streamlit: File upload UI, inventory and lint-result display
+**Resources:** [Path 4](./04-ai-assisted-product-development/README.md) Level 3 and capstone
 
 ---
 
-#### Week 19-20: Third Integrated Project
-**Project:** HR Analytics Dashboard  
-**Time Commitment:** 12-15 hours  
-**Skills Integration:**
-- SQL: Org-hierarchy and workforce-trend queries from Path 1
-- AI: Optional LLM-generated narrative summary of the numbers
-- Streamlit: Org chart, headcount/attrition visualizations
+### Week 15-16: Tracker: AI Jira Ticket Drafting
+Build the "Draft Jira Ticket" feature — a fixed template filled by Claude from task details. Use the PRD from Week 13-14 as its first real test input.
+
+**Roughly aim for:**
+- A working ticket-drafting flow, tested against the PRD you just wrote
+- An editable draft review step before anything is treated as final
+
+**Resources:** Anthropic API documentation, Jira REST API documentation, [Path 3](./03-streamlit-development/README.md) Phase 3
 
 ---
+
+### Week 17+ (Optional Stretch)
+Pick whichever of these are still interesting:
+- Push drafted tickets into Jira directly via its REST API
+- Weekly status-report generator from the Done column
+- Refine the tracker's ADHD-aware design further, based on continued real usage
+- Publish the Tableau Assistant or tracker as a public project
 
 ## 🎯 Learning Milestones
 
-### Milestone 1: SQL Competency ✓
-**After Week 4**
-- [ ] Write complex JOINs confidently
-- [ ] Understand and use window functions
-- [ ] Create and use CTEs
-- [ ] Read basic query plans
+### Milestone 1: Tracker Live
+- [ ] Kanban MVP built and in daily use
+- [ ] Tutor-mode prompting feels natural
 
-### Milestone 2: AI Fundamentals ✓
-**After Week 8**
-- [ ] Parse a Tableau `.twbx` workbook into Python objects
-- [ ] Implement rule-based workbook lint checks
-- [ ] Call the Claude API and get structured JSON output
-- [ ] Build first Streamlit app
+### Milestone 2: SQL + Tableau Parsing Competency
+- [ ] Comfortable with JOINs, window functions, and CTEs
+- [ ] A real workbook parsed and linted successfully
 
-### Milestone 3: Full Stack Skills ✓
-**After Week 12**
-- [ ] Advanced SQL optimization (HR dataset)
-- [ ] LLM-powered calculation explanations and Jira ticket drafts
-- [ ] Advanced Streamlit apps
-- [ ] Database integration
+### Milestone 3: LLM Integration Working
+- [ ] Structured JSON output from the Claude API, validated before use
+- [ ] Tracker persists to SQLite
 
-### Milestone 4: Production Ready ✓
-**After Week 16**
-- [ ] Build complete SQL↔AI↔Streamlit pipelines
-- [ ] Deploy applications
-- [ ] Optimize performance
-- [ ] Monitor and maintain systems
-
----
+### Milestone 4: Planning → Building Loop Closed
+- [ ] A real PRD written and broken into acceptance criteria
+- [ ] That PRD turned into actual drafted tickets by the tracker
 
 ## 🗂️ Repository Organization
 
-As you progress, build within the provided structure:
-
 ```
 01-advanced-sql/
-├── fundamentals/      ← Weeks 1-2
-├── intermediate/      ← Weeks 3-4, 11-12
-├── advanced/          ← Weeks 9-10
-└── projects/          ← Weeks 13+
+└── projects/                        ← e-commerce (done), org hierarchy, workforce trends
 
 02-ai-development/
-├── fundamentals/      ← Weeks 3-4
-├── intermediate/      ← Weeks 5-8
-├── advanced/          ← Weeks 9-10, 11-12
-└── projects/          ← Weeks 13+
+└── workbooks/                       ← local only, gitignored — real .twb/.twbx files
 
-03-streamlit-development/
-├── fundamentals/      ← Weeks 5-6
-├── intermediate/      ← Weeks 7-8
-├── advanced/          ← Weeks 11-12
-└── projects/          ← Weeks 13+
+03-streamlit-development/            ⭐ flagship — build first, harden later
 
-04-integrated-projects/
-└── full-stack-examples/
-    ├── work-tracker-jira/        ← Weeks 13-16
-    ├── tableau-assistant-ui/     ← Weeks 17-18
-    ├── hr-analytics-dashboard/   ← Weeks 19-20
-    └── your-projects/            ← Weeks 21+
+04-ai-assisted-product-development/  ← meta-skill: prompting, PRDs, code review
 ```
 
----
 
-## 📊 Time Breakdown
+## 💡 Flexible Ordering
 
-| Phase | Duration | Hours | Focus |
-|-------|----------|-------|-------|
-| SQL Foundations | 2 weeks | 18-20 | Queries, optimization (HR dataset) |
-| AI Foundations | 4 weeks | 36-40 | Python, Tableau file parsing |
-| Streamlit Basics | 4 weeks | 28-32 | Web apps, visualization |
-| Advanced Topics | 4 weeks | 40-44 | LLM integration, optimization |
-| Integration | 8 weeks | 80-100 | Full-stack projects |
-| **TOTAL** | **20 weeks** | **200-240 hours** | |
+The sequence above is a suggestion, not a requirement. The one fixed point is: **build the tracker MVP before anything else**, since it's what you'll use to hold everything that follows. After that, SQL, AI Development, and AI-Assisted Product Development can happen in whatever order keeps you interested — they aren't strictly sequential, and Path 4's draft-then-review practice works on whatever you're building at the time.
 
 ---
 
-## 🎓 Certification Paths (Optional)
-
-After completing the core roadmap:
-
-### Official Certifications
-- **Google Cloud Professional Data Engineer**
-- **Databricks Lakehouse Fundamentals**
-- **Atlassian Certified Jira Administrator** (if going deeper on the Jira integration)
-
-### Portfolio Building
-- Publish the Tableau Assistant and Work Tracker as public GitHub projects
-- Write up the HR analytics build for a portfolio/blog post
-- Share the tools with your team for real feedback
-
----
-
-## 💡 Flexible Learning Paths
-
-### Path A: SQL-First (Data Engineering Focus)
-1. SQL Fundamentals + Intermediate (4 weeks)
-2. SQL Advanced (2 weeks)
-3. AI Fundamentals + Intermediate (6 weeks)
-4. Streamlit (3 weeks)
-5. Integration (8 weeks)
-
-**Best for:** Data engineers, database specialists
-
-### Path B: AI-First (Tooling/LLM Focus)
-1. AI Fundamentals (2 weeks)
-2. AI Intermediate + SQL Basics (6 weeks)
-3. AI Advanced (4 weeks)
-4. Streamlit (3 weeks)
-5. SQL Advanced + Integration (8 weeks)
-
-**Best for:** Building the Tableau Assistant first, before the tracker app
-
-### Path C: Streamlit-First (App Development Focus)
-1. Streamlit Fundamentals (2 weeks)
-2. SQL Fundamentals + Streamlit Intermediate (4 weeks)
-3. AI Fundamentals + Streamlit Advanced (4 weeks)
-4. AI Intermediate + Advanced (6 weeks)
-5. Integration (8 weeks)
-
-**Best for:** Full-stack developers, product engineers
-
----
-
-## 🚀 Getting Started
-
-1. **Choose your path:** Standard, SQL-first, AI-first, or Streamlit-first
-2. **Set a schedule:** Commit 10-15 hours per week
-3. **Start with Week 1:** Advanced SQL Fundamentals
-4. **Build projects:** Don't just watch tutorials
-5. **Track progress:** Check off deliverables each week
-6. **Join community:** Find study groups, share progress
-
----
-
-## 📞 Support & Resources
-
-- **Questions?** Check the relevant README in each directory
-- **Stuck?** Review the resources listed for that week
-- **Want feedback?** Create pull requests with your projects
-- **Contribute:** Improve these materials with PRs!
-
----
-
-**Remember:** Consistency beats perfection. 10 hours per week for 20 weeks beats 40 hours once a month. Let's get started! 🚀
+**Questions?** Check the README in each directory or [`CLAUDE.md`](./CLAUDE.md) for how AI should work with you here.

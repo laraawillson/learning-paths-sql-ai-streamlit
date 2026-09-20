@@ -1,73 +1,59 @@
-# Learning Paths: Advanced SQL, AI Development & Streamlit
+# Learning Paths: SQL, AI Development, Streamlit & AI-Assisted Product Development
 
-A comprehensive, structured guide to mastering Advanced SQL, AI Development, and Streamlit through progressive learning modules, hands-on projects, and real-world examples.
+> **The vision:** build a small suite of AI-assisted tools that solve real problems in my life — most importantly, a workflow system that helps keep me organized — while leveling up SQL, Python, Streamlit, and Tableau using realistic (HR-*flavored*, not HR-*specific*) practice data. Throughout, learn to direct AI well as both a coding partner and a planning partner.
+
+**Build the [Work Tracker MVP](./03-streamlit-development/README.md) first, before anything else here, regardless of what order you tackle the rest in.** It's the flagship project, and it only pays off once it's tracking your real work — including the rest of this curriculum.
+
+## 🤖 Working with AI on this repo
+
+This repo has a `CLAUDE.md` that tells any Claude session working here to default to **tutor mode**: explain, ask guiding questions, have you attempt things first, review rather than rewrite. Builder mode (AI just writes the code) is opt-in only — ask for it explicitly when you want it. See [`CLAUDE.md`](./CLAUDE.md) for the full contract.
 
 ## 📚 Repository Structure
 
 ```
+├── CLAUDE.md
 ├── 01-advanced-sql/
 │   ├── README.md
-│   ├── fundamentals/
-│   ├── intermediate/
-│   ├── advanced/
 │   └── projects/
 ├── 02-ai-development/
 │   ├── README.md
-│   ├── fundamentals/
-│   ├── intermediate/
-│   ├── advanced/
-│   └── projects/
+│   └── workbooks/          (local only, gitignored — real Tableau files)
 ├── 03-streamlit-development/
-│   ├── README.md
-│   ├── fundamentals/
-│   ├── intermediate/
-│   ├── advanced/
-│   └── projects/
-├── 04-integrated-projects/
-│   ├── README.md
-│   └── full-stack-examples/
+│   └── README.md            ⭐ flagship — build this first
+├── 04-ai-assisted-product-development/
+│   └── README.md            (meta-skill supporting the other three)
 └── ROADMAP.md
 ```
 
 ## 🎯 Learning Paths Overview
 
+### ⭐ Path 3: Streamlit Development — *build first*
+**Skills:** Interactive apps, database integration, LLM integration — a personal work tracker with AI-drafted Jira tickets, designed around ADHD-aware workflow principles
+
 ### Path 1: Advanced SQL
-**Duration:** 4-6 weeks  
-**Skills:** Database design, query optimization, window functions, CTEs, recursive queries — practiced against an HR dataset (org hierarchy, workforce trends, attrition)
+**Skills:** Database design, query optimization, window functions, CTEs, recursive queries — practiced against an HR-flavored dataset (org hierarchy, workforce trends, attrition)
 
 ### Path 2: AI Development
-**Duration:** 6-8 weeks  
-**Skills:** Python for tooling, parsing the Tableau `.twb`/`.twbx` file format, LLM (Claude API) integration — building a Tableau Workbook Review & Assistant app
+**Skills:** Python for tooling, parsing the Tableau `.twb`/`.twbx` file format, LLM (Claude API) integration — building a Tableau Workbook Review & Assistant app, tested against real work workbooks
 
-### Path 3: Streamlit Development
-**Duration:** 3-4 weeks  
-**Skills:** Interactive apps, database integration, LLM integration — building a personal work tracker with AI-drafted Jira tickets
-
-### Path 4: Integrated Full-Stack Projects
-**Duration:** 4-6 weeks  
-**Skills:** Combining SQL, AI, and Streamlit into production applications — the Work Tracker + AI Jira Ticket Generator, the Tableau Assistant UI, and an HR analytics dashboard
+### Path 4: AI-Assisted Product Development
+**Skills:** Prompting, AI-assisted code review/pair-programming, PRDs, user stories, acceptance criteria — the meta-skill that supports the other three, not a separate technical domain
 
 ## 🚀 Quick Start
 
-1. **Choose Your Path:**
-   - Start with the topic you're most interested in
-   - Or follow the recommended sequence: SQL → AI → Streamlit → Integration
-
-2. **Follow the Structure:**
-   - Each path has Fundamentals → Intermediate → Advanced sections
-   - Each section includes theory, code examples, and exercises
-
-3. **Complete Projects:**
-   - Build practical projects to reinforce learning
-   - Contribute your solutions to the `projects/` directory
+1. **Build the Work Tracker MVP (Path 3, Project 1) first.** Get a bare-bones Kanban board running today and start using it to track everything else.
+2. **Then pick any order for Paths 1, 2, and 4** — they're not strictly sequential. Use the tracker to hold whatever you're working through.
+3. **Practice draft-then-review (Path 4) continuously**, on real code from whichever path you're in — not as a separate exercise done later.
+4. **Harden the tracker (Path 3, later phases)** once real usage has told you what's actually annoying about it.
 
 ## 📖 Detailed Sections
 
 - [Advanced SQL Learning Path](./01-advanced-sql/README.md)
 - [AI Development Learning Path](./02-ai-development/README.md)
-- [Streamlit Development Learning Path](./03-streamlit-development/README.md)
-- [Integrated Projects](./04-integrated-projects/README.md)
-- [20-Week Learning Roadmap](./ROADMAP.md)
+- [Streamlit Development Learning Path (flagship)](./03-streamlit-development/README.md)
+- [AI-Assisted Product Development](./04-ai-assisted-product-development/README.md)
+- [Learning Roadmap](./ROADMAP.md)
+- [Working with AI on this repo](./CLAUDE.md)
 
 ## 🛠️ Technologies & Tools
 
@@ -77,17 +63,16 @@ A comprehensive, structured guide to mastering Advanced SQL, AI Development, and
 
 ## 📝 How to Use This Repository
 
-1. Read the README in each learning path
-2. Work through examples in order (fundamentals first)
-3. Complete exercises and projects
-4. Reference code snippets for your own projects
-5. Share your progress and improvements via pull requests
+1. Build the Work Tracker MVP first
+2. Read the README in each learning path
+3. Work through exercises in tutor mode — attempt first, then review with AI
+4. Track your actual progress in the tracker, not just in these docs
+5. Harden and extend projects as real usage surfaces what's missing
 
 ## 🤝 Contributing
 
-Feel free to:
+This is a personal learning repo, but feel free to:
 - Add better examples
-- Create new projects
 - Fix errors or unclear explanations
 - Share your learning progress
 
@@ -99,18 +84,8 @@ Feel free to:
 - [Streamlit Documentation](https://docs.streamlit.io/)
 - [Jira REST API Documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/)
 
-## 📅 Estimated Time Commitment
-
-| Path | Duration | Hours |
-|------|----------|-------|
-| Advanced SQL | 4-6 weeks | 40-50 |
-| AI Development | 6-8 weeks | 60-80 |
-| Streamlit | 3-4 weeks | 25-35 |
-| Integration & Projects | 4-6 weeks | 50-70 |
-| **TOTAL** | **20 weeks** | **200-240 hours** |
-
 ---
 
-**Start learning:** Choose a path from the links above and begin with the fundamentals! 🎓
+**Start learning:** Build the [Work Tracker MVP](./03-streamlit-development/README.md) today. 🎓
 
-Questions? Check the README in each directory or open an issue.
+Questions? Check the README in each directory.
